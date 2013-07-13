@@ -83,6 +83,9 @@ a.brand {
 
 .navbar>.navbar-inner{
   padding-left: 0px;
+  padding-right: 0px;
+  border-left: none;
+  border-right: none;
 }
 
 /* 覆盖导航条激活菜单的背景色设置 */
