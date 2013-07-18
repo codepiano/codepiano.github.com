@@ -242,6 +242,7 @@ div.tooltip-inner {
 /* 归档和时间线页面列表样式 */
 ul.posts-list {
   list-style: none;
+  position: relative;
 }
 
 ul.posts-list li{
@@ -259,6 +260,8 @@ a.post-url {
 }
 
 span.post-right-info {
+  right: 0px;
+  position: absolute;
   font-size: 16px;
   color: #BBBBBB;
 }
