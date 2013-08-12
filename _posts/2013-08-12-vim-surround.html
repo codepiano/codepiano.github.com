@@ -1,0 +1,205 @@
+---
+layout: post
+keywords: vim插件,surround
+description: vim插件surround介绍
+title: vim插件surround介绍
+categories: [Vim,Vim Plugin]
+tags: [Vim,Vim Plugin]
+group: archive
+icon: compass
+---
+{% include codepiano/setup %}
+<h3>插件作者</h3>
+<p class="paragraph">
+vim-surround是一个处理成对出现的“包围结构”的插件，比如处理括号、引号和html标签。对文本的外包的结构进行增加、修改和删除。
+由于插件提供的命令接受vim文本对象和vim的移动命令，使用起来比较方便，额外的学习成本比较低。
+插件的github地址为：<a href="https://github.com/tpope/vim-surround">tpope/vim-surround · GitHub</a>
+作者是<a href="http://tpo.pe/">tpope</a>，tpope贡献了很多实用的vim插件，他的github：<a href="https://github.com/tpope">tpope (Tim Pope) · GitHub</a>
+</p>
+<h3>普通模式命令</h3>
+普通模式下，插件提供下列按键绑定：
+<ul class="nav nav-tabs nav-stacked">
+  <li><a href="#cs">cs 改变外部包围对象</a></li>
+  <li><a href="#ds">ds 删除外部包围对象</a></li>
+  <li><a href="#ys">ys 使用指定的符号包裹文本对象</a></li>
+</ul>
+<p class="paragraph" id="cs">
+cs命令是change surround的缩写，可以对指定的文本的外部包围字符进行替换，命令接受两个参数：
+第一个是被替换的外部包围字符，第二个是要替换为的字符。替换时光标需要移动到被包围的文本内。
+比如需要将字符串'test'外部的包围字符'替换为"，可以将光标移动到文本区域内，然后使用cs'"即可
+下面是一些例子，部分来自帮助文件，其中的*号代表光标位置
+<br />
+<span class="label label-important">注意</span> 命令中使用形如()、{}、[]的字符的左半部分和右半部分是有区别的，
+区别在于处理中的头部和尾部的空格的处理，考虑例子6、7、8、9的情况，处理字符串(        test    )，
+字符串有8个头部空格，有4个尾部空格。
+<br />
+<span class="label label-success">规则</span> 规则可以总结如下：
+<br />
+1.第一个参数使用符号的左半部分，会自动删除所有的头部和尾部 的空格，使用右半部分则不对空格进行处理
+<br />
+2.第二个参数使用符号的左半部分，会自动在左半部分的后面和右半部分的前面插入一个空格
+<br />
+注意例子7中的空格个数，被自动插入了空格
+</p>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td>原始文本</td>
+      <td>执行命令</td>
+      <td>执行结果</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>"Hello*world!"</td>
+      <td>cs"'</td>
+      <td>'Helloworld!'</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>"Hello*world!"</td>
+      <td>cs"&lt;q&gt;</td>
+      <td>&lt;q&gt;Helloworld!&lt;/q&gt;</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>{{ Hello*world! }}</td>
+      <td>cs{%</td>
+      <td>{%Hello*world!%}</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>{{ Hello*world! }}</td>
+      <td>cs{ %</td>
+      <td>{% Hello*world! %}</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>&lt;div&gt;Yo!*&lt;/div&gt;</td>
+      <td>cst&lt;p&gt;</td>
+      <td>&lt;p&gt;Yo!&lt;/p&gt;</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>(        test    )</td>
+      <td>cs([</td>
+      <td>[ test ]</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>(        test    )</td>
+      <td>cs(]</td>
+      <td>[test]</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>(        test    )</td>
+      <td>cs)[</td>
+      <td>[         test     ]</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>(        test    )</td>
+      <td>cs)]</td>
+      <td>[        test    ]</td>
+    </tr>
+  </tbody>
+</table>
+<p class="paragraph" id="ds">
+ds命令是delete surround的缩写，该命令只接受一个参数，即为需要删除的外部包围字符
+如果需要删除文本外部的标签，可以使用字符t来指代标签，不需要输入标签全称
+下面是一些例子：
+<br />
+<span class="label label-important">注意</span> 命令中使用形如()、{}、[]的字符的左半部分和右半部分是有区别的，
+规则同cs命令的规则1，即同样遵守第一个参数的规则，不再举例示范
+</p>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td>原始文本</td>
+      <td>执行命令</td>
+      <td>执行结果</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>"Hello*world!"</td>
+      <td>ds"</td>
+      <td>Hello world!</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>{{ Hello*world! }}</td>
+      <td>ds{</td>
+      <td>{Hello*world!}</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>(123+4*56)/2</td>
+      <td>ds)</td>
+      <td>123+456/2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>&lt;div&gt;Yo!*&lt;/div&gt;</td>
+      <td>dst</td>
+      <td>Yo!</td>
+    </tr>
+  </tbody>
+</table>
+<p class="paragraph" id="ys">
+ys命令是you surround（按作者的说法），可以对指定的文本进行包围，命令接受两个参数：
+第一个是指示文本范围或者移动位置的文本对象，第二个是包围操作使用的字符。插入时光标需要移动到被包围的文本内。
+比如需要将字符串test添加外部包围字符'，可以将光标移动到文本区域内，然后使用ysaw"即可，其中aw会被当作vim文本对象，
+下面是一些例子，部分来自帮助文件，其中的*号代表光标位置
+<br />
+指定范围的两种方法
+<br />
+1.文本对象，规则基本同vim的文本对象规则一样
+<br />
+2.移动位置，可以使用^、$、f等命令来指定位置，作用范围是当前光标到指定的位置
+<br />
+<span class="label label-important">注意</span> 命令中使用形如()、{}、[]的字符的左半部分和右半部分是有区别的，
+规则同cs命令的规则2，即同样遵守第二个参数的规则，不再举例示范
+</p>
+</p>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td>原始文本</td>
+      <td>执行命令</td>
+      <td>执行结果</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>test</td>
+      <td>ysiw'</td>
+      <td>'test'</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>'test'</td>
+      <td>ysi')</td>
+      <td>'(test)'</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>'test'</td>
+      <td>ysa')</td>
+      <td>('test')</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>foo*testbar</td>
+      <td>ystb)</td>
+      <td>foo(test)bar</td>
+    </tr>
+  </tbody>
+</table>
+<h3>可视模式命令</h3>
+<h3>插入模式命令</h3>
+<h3>定制插件行为</h3>
