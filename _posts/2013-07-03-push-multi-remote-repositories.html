@@ -9,7 +9,6 @@ group: archive
 icon: compass
 ---
 {% include codepiano/setup %}
-
 <p class="paragraph">
 最近<a href="http://www.oschina.net/">开源中国 - 找到您想要的开源项目，分享和交流</a>也推出了git项目托管服务，
 想把部分github中的项目同步到git@osc，在网上搜索了一下，找到了一种比较简单的同步办法，方法分享在下面。
@@ -30,3 +29,11 @@ icon: compass
 	fetch = +refs/heads/*:refs/remotes/origin/*
 </pre>
 </div>
+<p class="paragraph">
+当然，使用命令行也可以直接添加，命令格式如下：
+</p>
+{% highlight bash %}
+
+git remote set-url --add origin git@git.oschina.net:codepiano/pull-all-git-project.git
+
+{% endhighlight %}
