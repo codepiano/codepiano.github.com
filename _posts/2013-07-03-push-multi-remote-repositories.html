@@ -9,4 +9,15 @@ group: archive
 icon: compass
 ---
 {% include codepiano/setup %}
-test
+<p class="paragraph">
+最近<a href="http://www.oschina.net/">开源中国 - 找到您想要的开源项目，分享和交流</a>也推出了git项目托管服务，
+想把部分github中的项目同步到git@osc，在网上搜索了一下，找到了一种比较简单的同步办法，方法分享在下面。
+</p>
+<p class="paragraph">
+首先强烈推荐实用ssh的方式来完成push过程中的认证，这样不用每次都输入用户名和密码，十分方便。具体方式可以参考github的
+官方教程<a href="https://help.github.com/articles/generating-ssh-key">GitHub Help</a>
+</p>
+<p class="paragraph">
+如果已经配置好了ssh验证方式，在开源中国的git托管也可以使用同一个的key，然后打开github项目中中的.git/config文件
+在[remote "origin"]节点的原始url下面直接添加开源中国git中对应项目的ssh地址即可，例如：
+</p>
