@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>vim中添加快速单词查询功能</title>
+    <meta name="keywords" content="Vim,单词,查询">
+    <meta name="description" content="在vim中添加单词查询功能">
+    <meta name="author" content="codepiano">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/typo.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/solarized.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/datatables-bootstrap.css" rel="stylesheet">
+    <link href="/css/codepiano.css" rel="stylesheet">
+
+    <!-- javascript files -->
+    <script type="text/javascript" src="/js/jquery-2.0.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/js/datatables-bootstrap.js"></script>
+    <script type="text/javascript" src="/js/codepiano.js"></script>
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+    <script type="text/javascript">
+    </script>
+
+  </head>
+
+  <body id="scroll-pane" data-spy="scroll" data-target="#time-list-nav">
+    <div class="wrapper">
+      <!-- 导航条 -->
+      <div class="navbar">
+        <div class="navbar-inner row-fluid">
+          <div class="span2">
+          </div>
+          <div class="span8">
+            <a class="brand" href="/">
+              <span class="site-author"> codepiano </span>
+              <span class="site-title"> /* 隐匿于黑夜中的星 */ </span>
+            </a>
+            <ul class="nav">
+              
+              
+              
+
+
+
+
+
+<li class="posts"><a href="/posts.html">文章</a></li>
+<li class="timeline"><a href="/timeline.html">归档</a></li>
+<li class="categories"><a href="/categories.html">目录</a></li>
+<li class="about"><a href="/about.html">关于</a></li>
+
+            </ul>
+          </div>
+          <div class="span2">
+          </div>
+        </div>
+      </div>
+
+      <!-- 正文 -->
+      
+
+<div class="row-fluid post-full typo">
+  <div class="span2"></div>
+  <div class="span8 typo">
+    <h2>vim中添加快速单词查询功能 </h2>
+    <div class="post_info">
+      
+      <ul class="tag_box inline">
+        <li><i class="icon-calendar"></i></li>
+        <li> 2012 年 03 月 24 日</li>
+        <li><i class="icon-folder-open"></i></li>
+        
+        
+ 
+  <li>
+    <a href="/categories.html#Vim-ref">
+      Vim 
+    </a>
+  </li>
+  
+  <li>
+    <i class="icon-double-angle-right"></i>
+  </li>
+  
+ 
+  <li>
+    <a href="/categories.html#Vimscript-ref">
+      Vimscript 
+    </a>
+  </li>
+  
+
+
+
+      </ul>
+        
+    </div>
+    <div class="content">
+      
+
+
+<p class="paragraph">
+本文内容转载整理自网上的文章，<a href="http://wiki.hotoo.me/Vim.html">Vim - 闲耘™.Wiki</a> > 其它技巧 > 翻译取词，原始作者不详
+</p>
+
+<p class="paragraph">
+从github上下载的一些开源项目提供的文档是英文的，在vim里面看文档遇到不认识的单词还得用鼠标取词去查询，
+特别不方便。于是去网上找给vim添加便捷单词查询功能的方法，整理在下面
+</p>
+
+<p class="paragraph">
+首先需要安装一个shell下运行的词典工具stardict，可以使用下面的命令来安装
+</p>
+
+<div class="highlight"><pre><code class="bash">sudo apt-get install sdcv stardict stardict-tools 
+</code></pre>
+</div>
+
+
+<p class="paragraph">
+安装完成后可以在shell里面使用sdcv命令来查询单词，stardict并没有自带字典文件，需要自己去下载字典文件，
+可以用搜索引擎搜索stardict-langdao-ec-gb-2.4.2.tar.bz2来寻找字典数据包的下载地址，
+将下载下来的包解压后放入/usr/share/stardict/dic中，这里可能会碰到权限问题，可以用命令来完成。
+现在使用sdcv命令查询单词就能出现内容了
+</p>
+
+
+<div class="highlight">
+  <pre>
+ubuntu:~1 sdcv terminal
+Found 1 items, similar to terminal.
+-->朗道英汉字典5.0
+-->terminal
+['tә:minәl]
+n. 终端机, 终点, 末端, 极限, 终点站
+a. 终点的, 定期的, 致死的, 结尾的, 末端的, 晚期的
+【计】 终端; 终端设备
+【化】 接线端
+【医】 终末的, 末端, 端
+【经】 终站, 终点, 定期
+  </pre>
+</div>
+
+<p class="paragraph">
+下面就是给vim添加命令，让vim调用shell命令去查询单词，把结果显示到vim中，在vimrc中添加下面的函数，
+需要查词的时候把光标移动到要查的词内，默认使用&lt;leader&gt;f进行查询，在左侧会打开一个窗口，显示查询结果。
+快捷键和窗口的设置都可以通过修改下面的函数来进行自定义。网上提供的函数代码，打开查询结果的窗口后光标也会跟随到新窗口去，
+还需要再通过命令跳转回文本窗口，不是很方便。我在函数后面加了一行命令 "wincmd p"，来跳转回刚才的窗口，这样查词就方便多了
+</p>
+
+<div class="highlight"><pre><code class="vim"><span class="k">function</span><span class="p">!</span> Mydict<span class="p">()</span>
+<span class="c">&quot;执行sdcv命令查询单词的含义,返回的值保存在expl变量中</span>
+<span class="k">let</span> expl<span class="p">=</span>system<span class="p">(</span><span class="s1">&#39;sdcv -n &#39;</span> . expand<span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">))</span>
+<span class="c">&quot;在每个窗口中执行命令，判断窗口中的文件名是否是dict-tmp，如果是，强制关闭</span>
+<span class="k">windo</span> <span class="k">if</span> expand<span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">)==</span><span class="s2">&quot;dict-tmp&quot;</span> <span class="p">|</span><span class="k">q</span><span class="p">!|</span><span class="k">endif</span>	
+<span class="c">&quot;纵向分割窗口，宽度为25，新窗口的内容为dict-tmp文件的内容</span>
+<span class="m">25</span>vsp <span class="nb">dict</span><span class="p">-</span>tmp
+<span class="c">&quot;设置查询结果窗口的属性，不缓存，不保留交换文件</span>
+<span class="k">setlocal</span> <span class="nb">buftype</span><span class="p">=</span>nofile <span class="nb">bufhidden</span><span class="p">=</span><span class="k">hide</span> <span class="nb">noswapfile</span>
+<span class="c">&quot;将expl的内容显示到查询结果窗口</span>
+<span class="m">1</span>s<span class="sr">/^/</span>\<span class="p">=</span>expl/
+<span class="c">&quot;跳转回文本窗口</span>
+<span class="k">wincmd</span> <span class="k">p</span>
+<span class="k">endfunction</span>
+<span class="c">&quot;按键绑定，将调用函数并执行</span>
+nmap <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">f</span> :<span class="k">call</span> Mydict<span class="p">()&lt;</span>CR<span class="p">&gt;</span>
+</code></pre>
+</div>
+
+
+
+    </div>
+
+    
+    <ul class="tag_box inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+   
+    <li><a href="/posts.html#Vim">Vim <span>5</span></a></li>
+   
+    <li><a href="/posts.html#Vimscript">Vimscript <span>3</span></a></li>
+   
+    <li><a href="/posts.html#Translate">Translate <span>2</span></a></li>
+  
+
+
+
+    </ul>
+      
+
+    <hr>
+    <div class="pagination pull-right">
+      <ul>
+        
+        <li class="prev"><a href="/Web/Javascript/2012/03/02/jquery-datatables-config-cn" title="JQuery DataTables插件中文文档">&larr; Previous</a></li>
+        
+        <li><a href="/posts.html">Archive</a></li>
+        
+        <li class="next"><a href="/Vim/Tips/2012/04/04/100-vim-commands" title="100个常用的vim命令中文版">Next &rarr;</a></li>
+        
+      </ul>
+    </div>
+    <br />
+    <div id="comment-hook"></div>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_shortname = 'codepiano'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementById('comment-hook') || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+
+  </div>
+  <div class="span2"></div>
+</div>
+
+
+
+    </div>
+    <!-- 底部声明 -->
+    <div class="row-fluid bottom">
+      <div class="span2">
+      </div>
+      <div class="span8 text-center">
+        &mdash;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" class="license">原创作品许可 &mdash; 署名-非商业性使用-禁止演绎 3.0 未本地化版本 &mdash; CC BY-NC-ND 3.0 </a>&nbsp;&nbsp;&mdash;
+      </div>
+      <div class="span2">
+      </div>
+    </div>
+
+    
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-40934298-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+  </body>
+</html>
+
