@@ -6,7 +6,7 @@ $.extend( true, $.fn.dataTable.defaults, {
 		"sLengthMenu": "_MENU_ records per page"
 	}
 } );
-
+alert('1');
 
 /* Default class modification */
 $.extend( $.fn.dataTableExt.oStdClasses, {
