@@ -1,0 +1,1445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>~/.vim/bundle/ctrlp.git/doc/ctrlp.cnx.xhtml</title>
+<meta name="Generator" content="Vim/7.4" />
+<meta name="plugin-version" content="vim7.4_v1" />
+<meta name="syntax" content="help" />
+<meta name="settings" content="use_xhtml,use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=" />
+<meta name="colorscheme" content="solarized" />
+<style type="text/css">
+
+pre { white-space: pre-wrap; font-family: monospace; color: #808080; background-color: #1c1c1c; }
+body { font-family: monospace; color: #808080; background-color: #1c1c1c; }
+* { font-size: 1em; }
+.helpHyperTextJump { color: #0087ff; text-decoration: underline; }
+.helpHyperTextEntry { color: #5f8700; }
+.Comment { color: #4e4e4e; }
+.Constant { color: #00afaf; }
+.Special { color: #af0000; }
+.Statement { color: #5f8700; }
+.PreProc { color: #d75f00; }
+.helpExample { color: #8a8a8a; }
+.helpOption { color: #00afaf; }
+
+</style>
+
+<script type='text/javascript'>
+//<![CDATA[
+
+//]]>
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="helpHyperTextEntry">ctrlp.txt</span>       模糊的 文件, 缓冲区, 最近最多使用, 标签, ... 检索. v1.79
+<span class="helpHyperTextEntry">CtrlP</span> <span class="helpHyperTextEntry">ControlP</span> <span class="helpHyperTextEntry">'ctrlp'</span> <span class="helpHyperTextEntry">'ctrl-p'</span>
+<span class="PreProc">===============================================================================</span>
+#                                                                             #
+#          :::::::: ::::::::::: :::::::::  :::             :::::::::          #
+#         :+:    :+:    :+:     :+:    :+: :+:             :+:    :+:         #
+#         +:+           +:+     +:+    +:+ +:+             +:+    +:+         #
+#         +#+           +#+     +#++:++#:  +#+             +#++:++#+          #
+#         +#+           +#+     +#+    +#+ +#+             +#+                #
+#         #+#    #+#    #+#     #+#    #+# #+#             #+#                #
+#          ########     ###     ###    ### ##########      ###                #
+#                                                                             #
+<span class="PreProc">===============================================================================</span>
+名词对照（译注）
+
+  buffer:缓冲区                    mapping:按键绑定
+     mru:最近最多使用               prompt:提示符面板
+     tag:标签                          tab:页签
+     tab:制表符
+
+<span class="PreProc">===============================================================================</span>
+内容                                                            <span class="helpHyperTextEntry">ctrlp-content</span>
+
+    1. 介绍.............................................<span class="helpHyperTextJump">ctrlp-intro</span>
+    2. 选项.............................................<span class="helpHyperTextJump">ctrlp-options</span>
+    3. 命令.............................................<span class="helpHyperTextJump">ctrlp-commands</span>
+    4. 按键绑定.........................................<span class="helpHyperTextJump">ctrlp-mappings</span>
+    5. 输入格式.........................................<span class="helpHyperTextJump">ctrlp-input-formats</span>
+    6. 扩展.............................................<span class="helpHyperTextJump">ctrlp-extensions</span>
+
+<span class="PreProc">===============================================================================</span>
+介绍                                                              <span class="helpHyperTextEntry">ctrlp-intro</span>
+
+带有直观接口的全路径模糊文件, 缓冲区, 最近最多使用, 标签, ... 检索。
+使用纯净的Vimscript编写，可以运行在MacVim，gVim和版本号7.0以上的Vim中。
+全面支持Vim的正则表达式 <span class="helpHyperTextJump">regexp</span> 作为搜索模式，内建最近最多使用文件监测，
+项目根目录定位和更多特性。
+
+开启可选的扩展（标记，目录，rtscripts...），参考 <span class="helpHyperTextJump">ctrlp-extensions</span> 。
+
+<span class="PreProc">===============================================================================</span>
+<span class="Statement">OPTIONS                                                         </span><span class="helpHyperTextEntry">ctrlp-options</span>
+
+<span class="PreProc">总览:</span>
+
+  <span class="helpHyperTextJump"><a href="#loaded_ctrlp" class="anchor-link">loaded_ctrlp</a></span>................禁用插件。
+  <span class="helpHyperTextJump"><a href="#ctrlp_map" class="anchor-link">ctrlp_map</a></span>...................默认按键绑定。
+  <span class="helpHyperTextJump"><a href="#ctrlp_cmd" class="anchor-link">ctrlp_cmd</a></span>...................默认按键绑定调用的命令。
+  <span class="helpHyperTextJump"><a href="#ctrlp_by_filename" class="anchor-link">ctrlp_by_filename</a></span>...........是否默认开启文件名模式。
+  <span class="helpHyperTextJump"><a href="#ctrlp_regexp" class="anchor-link">ctrlp_regexp</a></span>................是否默认开启正则表达式模式。
+  <span class="helpHyperTextJump"><a href="#ctrlp_match_window" class="anchor-link">ctrlp_match_window</a></span>..........匹配窗口的显示位置。
+  <span class="helpHyperTextJump"><a href="#ctrlp_switch_buffer" class="anchor-link">ctrlp_switch_buffer</a></span>.........如果文件已在缓冲区中打开，跳转到该打开的缓冲区。
+  <span class="helpHyperTextJump"><a href="#ctrlp_reuse_window" class="anchor-link">ctrlp_reuse_window</a></span>..........重用特殊窗口（帮助、快速修复 <span class="helpHyperTextJump">quickfix</span> ，等等）。
+  <span class="helpHyperTextJump"><a href="#ctrlp_tabpage_position" class="anchor-link">ctrlp_tabpage_position</a></span>......新标签页出现的位置。
+  <span class="helpHyperTextJump"><a href="#ctrlp_working_path_mode" class="anchor-link">ctrlp_working_path_mode</a></span>.....如何设置CtrlP的本地工作目录。
+  <span class="helpHyperTextJump"><a href="#ctrlp_root_markers" class="anchor-link">ctrlp_root_markers</a></span>..........额外的，高优先级的根目录标识。
+  <span class="helpHyperTextJump"><a href="#ctrlp_use_caching" class="anchor-link">ctrlp_use_caching</a></span>...........针对每个会话，设置是否开启缓存的。
+  <span class="helpHyperTextJump"><a href="#ctrlp_clear_cache_on_exit" class="anchor-link">ctrlp_clear_cache_on_exit</a></span>...退出Vim后是否保留缓存。
+  <span class="helpHyperTextJump"><a href="#ctrlp_cache_dir" class="anchor-link">ctrlp_cache_dir</a></span>.............缓存目录的位置。
+  <span class="helpHyperTextJump"><a href="#ctrlp_show_hidden" class="anchor-link">ctrlp_show_hidden</a></span>...........是否显示隐藏文件和隐藏文件夹。
+  <span class="helpHyperTextJump"><a href="#ctrlp_custom_ignore" class="anchor-link">ctrlp_custom_ignore</a></span>.........使用 <span class="helpHyperTextJump">globpath()</span> 时自定义忽略的文件或目录。
+  <span class="helpHyperTextJump"><a href="#ctrlp_max_files" class="anchor-link">ctrlp_max_files</a></span>.............扫描文件的最大数目。
+  <span class="helpHyperTextJump"><a href="#ctrlp_max_depth" class="anchor-link">ctrlp_max_depth</a></span>.............扫描目录的最大层数。
+  <span class="helpHyperTextJump"><a href="#ctrlp_user_command" class="anchor-link">ctrlp_user_command</a></span>..........使用外部的扫描工具。
+  <span class="helpHyperTextJump"><a href="#ctrlp_max_history" class="anchor-link">ctrlp_max_history</a></span>...........历史提示符面板中保留的最大条目数。
+  <span class="helpHyperTextJump"><a href="#ctrlp_open_new_file" class="anchor-link">ctrlp_open_new_file</a></span>.........由<span class="Special">&lt;c-y&gt;</span>创建的文件的打开方式。
+  <span class="helpHyperTextJump"><a href="#ctrlp_open_multiple_files" class="anchor-link">ctrlp_open_multiple_files</a></span>...由<span class="Special">&lt;c-z&gt;</span>选择的文件的打开方式。
+  <span class="helpHyperTextJump"><a href="#ctrlp_arg_map" class="anchor-link">ctrlp_arg_map</a></span>...............是否拦截<span class="Special">&lt;c-y&gt;</span> 和 <span class="Special">&lt;c-o&gt;</span> 命令。
+  <span class="helpHyperTextJump"><a href="#ctrlp_follow_symlinks" class="anchor-link">ctrlp_follow_symlinks</a></span>.......是否跟随链接。
+  <span class="helpHyperTextJump"><a href="#ctrlp_lazy_update" class="anchor-link">ctrlp_lazy_update</a></span>...........停止输入时才更新。
+  <span class="helpHyperTextJump"><a href="#ctrlp_default_input" class="anchor-link">ctrlp_default_input</a></span>.........为提示符面板提供一个种子。
+  <span class="helpHyperTextJump"><a href="#ctrlp_abbrev" class="anchor-link">ctrlp_abbrev</a></span>................输入缩写。
+  <span class="helpHyperTextJump"><a href="#ctrlp_key_loop" class="anchor-link">ctrlp_key_loop</a></span>..............为多字节输入开启输入事件循环。
+  <span class="helpHyperTextJump"><a href="#ctrlp_use_migemo" class="anchor-link">ctrlp_use_migemo</a></span>............为日语文件名启用Migemo模式。
+  <span class="helpHyperTextJump"><a href="#ctrlp_prompt_mappings" class="anchor-link">ctrlp_prompt_mappings</a></span>.......改变提示符面板内部的按键绑定。
+
+  最近最常使用模式:
+  <span class="helpHyperTextJump"><a href="#ctrlp_mruf_max" class="anchor-link">ctrlp_mruf_max</a></span>..............记录的最近最常最多使用的最大数据。
+  <span class="helpHyperTextJump"><a href="#ctrlp_mruf_exclude" class="anchor-link">ctrlp_mruf_exclude</a></span>..........需要被排除的文件。
+  <span class="helpHyperTextJump"><a href="#ctrlp_mruf_include" class="anchor-link">ctrlp_mruf_include</a></span>..........需要被记录的文件。
+  <span class="helpHyperTextJump"><a href="#ctrlp_mruf_relative" class="anchor-link">ctrlp_mruf_relative</a></span>.........只显示在工作目录内的最近最多使用。
+  <span class="helpHyperTextJump"><a href="#ctrlp_mruf_default_order" class="anchor-link">ctrlp_mruf_default_order</a></span>....禁用排序。
+  <span class="helpHyperTextJump"><a href="#ctrlp_mruf_case_sensitive" class="anchor-link">ctrlp_mruf_case_sensitive</a></span>...最近最多使用文件是否大小写敏感。
+  <span class="helpHyperTextJump"><a href="#ctrlp_mruf_save_on_update" class="anchor-link">ctrlp_mruf_save_on_update</a></span>...只要有一个新的条目添加，就保存到磁盘。
+
+  缓冲区标签模式: (开启此模式，参考 <span class="helpHyperTextJump"><a href="#ctrlp-extensions" class="anchor-link">ctrlp-extensions</a></span> )
+  <span class="helpHyperTextJump"><a href="#g:ctrlp_buftag_ctags_bin" class="anchor-link">g:ctrlp_buftag_ctags_bin</a></span>....兼容的ctags二进制程序的位置。
+  <span class="helpHyperTextJump"><a href="#g:ctrlp_buftag_systemenc" class="anchor-link">g:ctrlp_buftag_systemenc</a></span>....ctags命令的编码。
+  <span class="helpHyperTextJump"><a href="#g:ctrlp_buftag_types" class="anchor-link">g:ctrlp_buftag_types</a></span>........添加新的文件类型和设置命令行参数。
+
+  高级选项:
+  <span class="helpHyperTextJump"><a href="#ctrlp_open_func" class="anchor-link">ctrlp_open_func</a></span>.............使用自定义的打开文件的函数。
+  <span class="helpHyperTextJump"><a href="#ctrlp_status_func" class="anchor-link">ctrlp_status_func</a></span>...........改变CtrlP的两个状态栏
+  <span class="helpHyperTextJump"><a href="#ctrlp_buffer_func" class="anchor-link">ctrlp_buffer_func</a></span>...........在CtrlP的缓冲区内调用自定义的函数。
+  <span class="helpHyperTextJump"><a href="#ctrlp_match_func" class="anchor-link">ctrlp_match_func</a></span>............替换内建的匹配算法。
+
+<span class="PreProc">-------------------------------------------------------------------------------</span>
+<span class="PreProc">详细描述和默认值:</span>
+
+<span class="Statement">                                                                </span><span class="helpHyperTextEntry"><a name="ctrlp_map" >'g:ctrlp_map'</a></span>
+使用该选项来改变普通模式 <span class="helpHyperTextJump">Normal</span> 下调用CtrlP的按键绑定:
+<span class="helpExample">  let g:ctrlp_map = '&lt;c-p&gt;'</span>
+
+
+<span class="Statement">                                                                </span><span class="helpHyperTextEntry"><a name="ctrlp_cmd" >'g:ctrlp_cmd'</a></span>
+
+设置当按下上面的按键绑定时，使用的默认打开命令:
+<span class="helpExample">  let g:ctrlp_cmd = 'CtrlP'</span>
+
+
+<span class="Statement">                                                             </span><span class="helpHyperTextEntry"><a name="loaded_ctrlp" >'g:loaded_ctrlp'</a></span>
+使用该选项完全禁用插件:
+<span class="helpExample">  let g:loaded_ctrlp = 1</span>
+
+
+<span class="Statement">                                                        </span><span class="helpHyperTextEntry"><a name="ctrlp_by_filename" >'g:ctrlp_by_filename'</a></span>
+修改该选项为1，设置默认为按文件名搜索（否则为全路径）:
+<span class="helpExample">  let g:ctrlp_by_filename = 0</span>
+
+在提示符面板内可以使用 <span class="Special">&lt;c-d&gt;</span> 来切换。
+
+<span class="Statement">                                                             </span><span class="helpHyperTextEntry"><a name="ctrlp_regexp" >'g:ctrlp_regexp'</a></span>
+修改该选项为1，设置默认为使用正则表达式匹配。:
+<span class="helpExample">  let g:ctrlp_regexp = 0</span>
+
+在提示符面板内可以使用 <span class="Special">&lt;c-r&gt;</span> 来切换。
+
+<span class="Statement">                                                       </span><span class="helpHyperTextEntry"><a name="ctrlp_match_window" >'g:ctrlp_match_window'</a></span>
+改变匹配窗口的位置，结果的排列顺序，最小和最大高度:
+<span class="helpExample">  let g:ctrlp_match_window = ''</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'</span>
+
+位置: (默认:底部)
+  top - 在屏幕顶部显示匹配窗口。
+  bottom - 在屏幕底部显示匹配窗口。
+
+结果的排列顺序: (默认: btt)
+  order:ttb - 从顶部到底部。
+  order:btt - 从底部到顶部。
+
+最小和最大高度:
+  min:<span class="Special">{n}</span> - 最少显示 <span class="Special">{n}</span> 行 (默认: 1).
+  max:<span class="Special">{n}</span> - 最多显示 <span class="Special">{n}</span> 行 (默认: 10).
+
+结果集的最大数目:
+  results:<span class="Special">{n}</span> - 列出最多 <span class="Special">{n}</span> 条结果 (默认: 和最大高度同步).
+
+注意: 当一个设置项没有被设置时，将会使用默认值。
+
+<span class="Statement">                                                      </span><span class="helpHyperTextEntry"><a name="ctrlp_switch_buffer" >'g:ctrlp_switch_buffer'</a></span>
+当尝试打开一个文件时，如果它已经在某个窗口被打开，CtrlP会尝试跳到那个窗口，而
+不是新打开一个实例。:
+<span class="helpExample">  let g:ctrlp_switch_buffer = 'Et'</span>
+
+  e - 当 <span class="Special">&lt;cr&gt;</span> 被按下时跳转，但是只跳转到当前页签内的窗口内。
+  t - 当 <span class="Special">&lt;c-t&gt;</span> 被按下时跳转, 但是只跳转到其它标签的窗口内。
+  v - 类似 &quot;e&quot;, 但是当 <span class="Special">&lt;c-v&gt;</span> 被按下时跳转。
+  h - 类似 &quot;e&quot;, 但是当 <span class="Special">&lt;c-x&gt;</span> 被按下时跳转。
+  E, T, V, H - 行为类似 &quot;e&quot;, &quot;t&quot;, &quot;v&quot;, and &quot;h&quot;, 但是跳转到任何地方的窗口中。
+  0 或者 <span class="Special">&lt;empty&gt;</span> - 禁用这项功能。
+
+<span class="Statement">                                                       </span><span class="helpHyperTextEntry"><a name="ctrlp_reuse_window" >'g:ctrlp_reuse_window'</a></span>
+当使用 <span class="Special">&lt;cr&gt;</span> 打开新文件时，CtrlP避免在插件，帮助，快速修复创建的窗口中打开该文
+件。使用该选项来设置一些例外:
+<span class="helpExample">  let g:ctrlp_reuse_window = 'netrw'</span>
+
+接受的值可以为特殊缓冲区的名字的一部分，文件类型或者缓冲区类型使用正则表达式来
+指定匹配模式。
+例子:
+<span class="helpExample">  let g:ctrlp_reuse_window = 'netrw\|help\|quickfix'</span>
+
+
+<span class="Statement">                                                   </span><span class="helpHyperTextEntry"><a name="ctrlp_tabpage_position" >'g:ctrlp_tabpage_position'</a></span>
+新打开页签的位置:
+<span class="helpExample">  let g:ctrlp_tabpage_position = 'ac'</span>
+
+  a - 后面。
+  b - 前面。
+  c - 当前页签。
+  l - 最后一个页签。
+  f - 第一个页签。
+
+<span class="Statement">                                                  </span><span class="helpHyperTextEntry"><a name="ctrlp_working_path_mode" >'g:ctrlp_working_path_mode'</a></span>
+当启动时，CtrlP依据这个变量来设置它的工作目录:
+<span class="helpExample">  let g:ctrlp_working_path_mode = 'ra'</span>
+
+  c - 当前文件所在的目录。
+  a - 类似 &quot;c&quot;, 但是只有在CtrlP之外的当前工作目录不是当前文件所在目录的直接祖
+      先时才生效。(译注：请参考<span class="Constant"><a href="https://github.com/kien/ctrlp.vim/issues/397">https://github.com/kien/ctrlp.vim/issues/397</a></span>)
+  r - 包含下列文件或者目录的最近的祖先:
+      .git .hg .svn .bzr _darcs
+  w - 开始从CtrlP的工作目录之外的目录，而不是当前文件所在的目录（默认）查找根
+      目录。只有在&quot;r&quot;选项存在的时候才生效。
+  0 或者 <span class="Special">&lt;empty&gt;</span> - 禁用这项功能。
+
+注意 #1: 如果 &quot;a&quot; 或者 &quot;c&quot; 和 &quot;r&quot;一起被包含，当无法找到根目录时使用 &quot;a&quot; 或者
+&quot;c&quot; 的行为（作为备选）。
+
+注意 #2: 你可以在每个缓冲区内使用 <span class="helpHyperTextJump">b:var</span> 来设置该选项。
+
+<span class="Statement">                                                       </span><span class="helpHyperTextEntry"><a name="ctrlp_root_markers" >'g:ctrlp_root_markers'</a></span>
+使用该选项来设置自定义的根目录标记作为对默认标记(.hg, .svn, .bzr, and _darcs)
+的补充。自定义的标记具有优先权:
+<span class="helpExample">  let g:ctrlp_root_markers = ['']</span>
+
+注意: 你可以在每个缓冲区内使用 <span class="helpHyperTextJump">b:var</span> 来设置该选项。
+
+<span class="Statement">                                                        </span><span class="helpHyperTextEntry"><a name="ctrlp_use_caching" >'g:ctrlp_use_caching'</a></span>
+启用/禁用每个会话的缓存:
+<span class="helpExample">  let g:ctrlp_use_caching = 1</span>
+
+  0 - 禁用缓存。
+  1 - 启用缓存。
+  n - 当大于1时，禁用缓存，使用该数值作为重新启用缓存的限制条件。
+
+注意: 当在CtrlP中时你可以使用 <span class="Special">&lt;F5&gt;</span> 来快速的清除缓存。
+
+<span class="Statement">                                                </span><span class="helpHyperTextEntry"><a name="ctrlp_clear_cache_on_exit" >'g:ctrlp_clear_cache_on_exit'</a></span>
+设置该选项为0通过退出Vim时不删除缓存文件来启用跨回话的缓存:
+<span class="helpExample">  let g:ctrlp_clear_cache_on_exit = 1</span>
+
+
+<span class="Statement">                                                          </span><span class="helpHyperTextEntry"><a name="ctrlp_cache_dir" >'g:ctrlp_cache_dir'</a></span>
+设置存储缓存文件的目录:
+<span class="helpExample">  let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'</span>
+
+
+<span class="Statement">                                                        </span><span class="helpHyperTextEntry"><a name="ctrlp_show_hidden" >'g:ctrlp_show_hidden'</a></span>
+如果你想CtrlP扫描隐藏文件和目录，设置该选项为1:
+<span class="helpExample">  let g:ctrlp_show_hidden = 0</span>
+
+注意: 当命令使用 <span class="helpHyperTextJump">g:ctrlp_user_command</span> 定义时该选项无效。
+
+<span class="Statement">                                                           </span><span class="helpHyperTextEntry">'ctrlp-wildignore'</span>
+你可以使用Vim的 <span class="helpHyperTextJump">'wildignore'</span> 来从结果集中排序文件或目录。
+例子:
+<span class="helpExample">  &quot; 排除版本控制文件</span>
+<span class="helpExample">  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        &quot; Linux/MacOSX</span>
+<span class="helpExample">  set wildignore+=*\\.git\\*,*\\.hg\\*,*\\.svn\\*  &quot; Windows ('noshellslash')</span>
+
+注意 #1: 每个目录设置前的字符 <span class="Comment">*/</span> 是必须的。
+
+注意 #2: <span class="helpHyperTextJump">wildignore</span> 影响 <span class="helpHyperTextJump">expand()</span> ， <span class="helpHyperTextJump">globpath()</span> 和 <span class="helpHyperTextJump">glob()</span> 的结果，这些函数被很
+多插件用来在系统中执行查找。（例如和版本控制系统有关的插件在查找.git/、.hg/等，
+一些其他插件用来在Windows上查找外部的*.exe工具），所以要修改 <span class="helpHyperTextJump">wildignore</span> 时请先
+考虑清楚。
+
+<span class="Statement">                                                      </span><span class="helpHyperTextEntry"><a name="ctrlp_custom_ignore" >'g:ctrlp_custom_ignore'</a></span>
+作为对 <span class="helpHyperTextJump">'wildignore'</span> 的补充，用来设置你只是想在CtrlP中隐藏的文件和目录。使用正
+则表达式来指定匹配模式:
+<span class="helpExample">  let g:ctrlp_custom_ignore = ''</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'</span>
+<span class="helpExample">  let g:ctrlp_custom_ignore = {</span>
+<span class="helpExample">    \ 'dir':  '\v[\/]\.(git|hg|svn)$',</span>
+<span class="helpExample">    \ 'file': '\v\.(exe|so|dll)$',</span>
+<span class="helpExample">    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',</span>
+<span class="helpExample">    \ }</span>
+<span class="helpExample">  let g:ctrlp_custom_ignore = {</span>
+<span class="helpExample">    \ 'file': '\v(\.cpp|\.h|\.hh|\.cxx)@&lt;!$'</span>
+<span class="helpExample">    \ }</span>
+
+注意 #1: 默认情况下， <span class="helpHyperTextJump">wildignore</span> 和 <span class="helpHyperTextJump">g:ctrlp_custom_ignore</span> 只在 <span class="helpHyperTextJump">globpath()</span> 被用
+来扫描文件的情况下使用，这样这些选项在那些使用 <span class="helpHyperTextJump">g:ctrlp_user_command</span> 定义的命
+令中不会生效。
+
+注意 #2: 当改变选项的变量类型时，记得先 <span class="helpHyperTextJump">:unlet</span> ，或者重启Vim来避免这个错误：
+&quot;E706: Variable type mismatch&quot; 。
+
+<span class="Statement">                                                          </span><span class="helpHyperTextEntry"><a name="ctrlp_max_files" >'g:ctrlp_max_files'</a></span>
+扫描文件的最大数量，设置为0时不进行限制:
+<span class="helpExample">  let g:ctrlp_max_files = 10000</span>
+
+注意: 当命令使用 <span class="helpHyperTextJump">g:ctrlp_user_command</span> 定义时该选项无效。
+
+<span class="Statement">                                                          </span><span class="helpHyperTextEntry"><a name="ctrlp_max_depth" >'g:ctrlp_max_depth'</a></span>
+目录树递归的最大层数:
+<span class="helpExample">  let g:ctrlp_max_depth = 40</span>
+
+注意: 当命令使用 <span class="helpHyperTextJump">g:ctrlp_user_command</span> 定义时该选项无效。
+
+<span class="Statement">                                                       </span><span class="helpHyperTextEntry"><a name="ctrlp_user_command" >'g:ctrlp_user_command'</a></span>
+指定用来代替Vim的 <span class="helpHyperTextJump">globpath()</span> 的外部工具来列出文件，使用 %s 代表目标目录:
+<span class="helpExample">  let g:ctrlp_user_command = ''</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_user_command = 'find %s -type f'       &quot; MacOSX/Linux</span>
+<span class="helpExample">  let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d' &quot; Windows</span>
+
+你也可以使用 <span class="helpOption">'grep'</span>, <span class="helpOption">'findstr'</span> 或者其它东西来过滤结果集。
+例子:
+<span class="helpExample">  let g:ctrlp_user_command =</span>
+<span class="helpExample">    \ 'find %s -type f | grep -v -P &quot;\.jpg$|/tmp/&quot;'          &quot; MacOSX/Linux</span>
+<span class="helpExample">  let g:ctrlp_user_command =</span>
+<span class="helpExample">    \ 'dir %s /-n /b /s /a-d | findstr /v /l &quot;.jpg \\tmp\\&quot;' &quot; Windows</span>
+
+在扫描一个大型项目时，在仓库目录中使用版本控制系统的列出命令会加快扫描速度:
+<span class="helpExample">  let g:ctrlp_user_command = [root_marker, listing_command, fallback_command]</span>
+<span class="helpExample">  let g:ctrlp_user_command = {</span>
+<span class="helpExample">    \ 'types': {</span>
+<span class="helpExample">      \ 1: [root_marker_1, listing_command_1],</span>
+<span class="helpExample">      \ n: [root_marker_n, listing_command_n],</span>
+<span class="helpExample">      \ },</span>
+<span class="helpExample">    \ 'fallback': fallback_command,</span>
+<span class="helpExample">    \ 'ignore': 0 or 1</span>
+<span class="helpExample">    \ }</span>
+
+一些例子:
+<span class="helpExample">  &quot; 单个版本控制系统，列出命令不会列出没有被追踪的文件:</span>
+<span class="helpExample">  let g:ctrlp_user_command = ['.git', 'cd %s &amp;&amp; git ls-files']</span>
+<span class="helpExample">  let g:ctrlp_user_command = ['.hg', 'hg --cwd %s locate -I .']</span>
+
+<span class="helpExample">  &quot; 多个版本控制系统:</span>
+<span class="helpExample">  let g:ctrlp_user_command = {</span>
+<span class="helpExample">    \ 'types': {</span>
+<span class="helpExample">      \ 1: ['.git', 'cd %s &amp;&amp; git ls-files'],</span>
+<span class="helpExample">      \ 2: ['.hg', 'hg --cwd %s locate -I .'],</span>
+<span class="helpExample">      \ },</span>
+<span class="helpExample">    \ 'fallback': 'find %s -type f'</span>
+<span class="helpExample">    \ }</span>
+
+<span class="helpExample">  &quot; 单个版本控制系统，列出命令列出没有被追踪的文件（较慢）:</span>
+<span class="helpExample">  let g:ctrlp_user_command =</span>
+<span class="helpExample">    \ ['.git', 'cd %s &amp;&amp; git ls-files . -co --exclude-standard']</span>
+
+<span class="helpExample">  let g:ctrlp_user_command =</span>
+<span class="helpExample">    \ ['.hg', 'hg --cwd %s status -numac -I . $(hg root)'] &quot; MacOSX/Linux</span>
+
+<span class="helpExample">  let g:ctrlp_user_command = ['.hg', 'for /f &quot;tokens=1&quot; %%a in (''hg root'') '</span>
+<span class="helpExample">    \ . 'do hg --cwd %s status -numac -I . %%a']           &quot; Windows</span>
+
+注意 #1: 在 <span class="helpHyperTextJump">Dictionary</span> 格式, <span class="helpOption">'fallback'</span> 和 <span class="helpOption">'ignore'</span> 是可选的，在 <span class="helpHyperTextJump">List</span> 格式，
+备选命令是可选的。
+
+注意 #2: 如果备选命令是空的或者属性 <span class="helpOption">'fallback'</span> 没有定义，当扫描仓库之外目录时，
+<span class="helpHyperTextJump">globpath()</span> 会被使用。
+
+注意 #3: 除非使用了 <span class="helpHyperTextJump">Dictionary</span> 格式并且 <span class="helpOption">'ignore'</span> 被定义并且设置为1，当这些自
+定义的命令被使用时 <span class="helpHyperTextJump">wildignore</span> 和 <span class="helpHyperTextJump">g:ctrlp_custom_ignore</span> 选项不会生效。没有出现
+时，<span class="helpOption">'ignore'</span> 被默认设置为0来保留使用外部命令的性能优势。
+
+注意 #4: 当改变了选项的变量类型时，记得先 <span class="helpHyperTextJump">:unlet</span> ，或者重启Vim来避免这个错误：
+&quot;E706: Variable type mismatch&quot; 。
+
+注意 #5: 你可以在每个缓冲区内使用 <span class="helpHyperTextJump">b:var</span> 来设置该选项。
+
+<span class="Statement">                                                        </span><span class="helpHyperTextEntry"><a name="ctrlp_max_history" >'g:ctrlp_max_history'</a></span>
+你希望CtrlP记录的用户输入历史的最大数目。默认值是Vim的全局选项 <span class="helpHyperTextJump">'history'</span> :
+<span class="helpExample">  let g:ctrlp_max_history = &amp;history</span>
+
+设置为0来禁用提示符面板的历史。使用 <span class="Special">&lt;c-n&gt;</span> 和 <span class="Special">&lt;c-p&gt;</span> 来浏览历史。
+
+<span class="Statement">                                                      </span><span class="helpHyperTextEntry"><a name="ctrlp_open_new_file" >'g:ctrlp_open_new_file'</a></span>
+使用该选项指定当使用 <span class="Special">&lt;c-y&gt;</span> 打开新建的文件时，文件的打开方式:
+<span class="helpExample">  let g:ctrlp_open_new_file = 'v'</span>
+
+  t - 在新页签中。
+  h - 在新的水平分割窗口。
+  v - 在新的竖直分割窗口。
+  r - 在当前窗口。
+
+<span class="Statement">                                                </span><span class="helpHyperTextEntry"><a name="ctrlp_open_multiple_files" >'g:ctrlp_open_multiple_files'</a></span>
+如果非0， 会启用使用 <span class="Special">&lt;c-z&gt;</span> 和 <span class="Special">&lt;c-o&gt;</span> 打开多个文件:
+<span class="helpExample">  let g:ctrlp_open_multiple_files = 'v'</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_open_multiple_files = '2vjr'</span>
+
+对于数字:
+  - 如果指定，会被用来作为打开文件时创建的窗口或者页签的最大数量（剩余的会在隐
+    藏的缓冲区中打开）。
+  - 如果没有指定，<span class="Special">&lt;c-o&gt;</span> 会打开所有文件，每个在一个新的窗口或者页签中。
+
+对于字母:
+  t - 每个文件在一个新页签中。
+  h - 每个文件在一个新的水平分割窗口中。
+  v - 每个文件在一个新的竖直分割窗口中。
+  i - 所有的文件在隐藏的缓冲区中。
+  j - 打开以后，跳转到第一个打开的页签或者窗口。
+  r - 在当前窗口打开第一个文件，其他文件根据同时出现的&quot;h&quot;，&quot;v&quot;和&quot;t&quot;中的一个，
+      在新的分割窗口或者页签中打开。
+
+<span class="Statement">                                                            </span><span class="helpHyperTextEntry"><a name="ctrlp_arg_map" >'g:ctrlp_arg_map'</a></span>
+当设置为1时， <span class="Special">&lt;c-o&gt;</span> 和 <span class="Special">&lt;c-y&gt;</span> 会接收一个额外的键值作为参数，来覆盖默认行为:
+<span class="helpExample">  let g:ctrlp_arg_map = 0</span>
+
+按下 <span class="Special">&lt;c-o&gt;</span> 或者 <span class="Special">&lt;c-y&gt;</span> 会提示一次按键。按键可以是:
+  t - 在新标签页中打开。
+  h - 每个文件在一个新的水平分割窗口中。
+  v - 每个文件在一个新的竖直分割窗口中。
+  i - 所有的文件在隐藏的缓冲区中（只有 <span class="Special">&lt;c-o&gt;</span> 生效）。
+  c - 清楚标记的文件（只有 <span class="Special">&lt;c-o&gt;</span> 生效）。
+  r - 在当前窗口中打开（只有 <span class="Special">&lt;c-y&gt;</span> 生效）。
+  <span class="Special">&lt;esc&gt;</span>, <span class="Special">&lt;c-c&gt;</span>, <span class="Special">&lt;c-u&gt;</span> - 取消并且回到提示符面板。
+  <span class="Special">&lt;cr&gt;</span> - 使用 <span class="helpHyperTextJump">g:ctrlp_open_new_file</span> 和 <span class="helpHyperTextJump">g:ctrlp_open_multiple_files</span> 指定的默
+         认行为。
+
+
+<span class="Statement">                                                    </span><span class="helpHyperTextEntry"><a name="ctrlp_follow_symlinks" >'g:ctrlp_follow_symlinks'</a></span>
+如果非0，当列出文件时CtrlP会跟随链接:
+<span class="helpExample">  let g:ctrlp_follow_symlinks = 0</span>
+
+  0 - 不要跟随链接。
+  1 - 跟随但是忽略内部循环的链接，避免重复。
+  2 - 无差别的跟随所有链接。
+
+注意: 当命令使用 <span class="helpHyperTextJump">g:ctrlp_user_command</span> 定义时该选项无效。
+
+<span class="Statement">                                                        </span><span class="helpHyperTextEntry"><a name="ctrlp_lazy_update" >'g:ctrlp_lazy_update'</a></span>
+设置为1将开启延迟更新特性：只在输入停止一个确定的时间后才更新匹配窗口:
+<span class="helpExample">  let g:ctrlp_lazy_update = 0</span>
+
+如果设置为1，在250毫秒后更新。如果大于1，数字会被作为延迟时间使用。
+
+<span class="Statement">                                                      </span><span class="helpHyperTextEntry"><a name="ctrlp_default_input" >'g:ctrlp_default_input'</a></span>
+设置为1将为提示符面板提供当前文件的相对路径作为种子:
+<span class="helpExample">  let g:ctrlp_default_input = 0</span>
+
+如果不指定1或0，如果选项的值是字符串，会被用来作为默认输入:
+<span class="helpExample">  let g:ctrlp_default_input = 'anystring'</span>
+
+
+<span class="Statement">                                                             </span><span class="helpHyperTextEntry"><a name="ctrlp_abbrev" >'g:ctrlp_abbrev'</a></span>
+定义可以在提示面包内被扩展（内部的或者可见的）的输入缩写:
+<span class="helpExample">  let g:ctrlp_abbrev = {}</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_abbrev = {</span>
+<span class="helpExample">    \ 'gmode': 'i',</span>
+<span class="helpExample">    \ 'abbrevs': [</span>
+<span class="helpExample">      \ {</span>
+<span class="helpExample">        \ 'pattern': '^cd b',</span>
+<span class="helpExample">        \ 'expanded': '@cd ~/.vim/bundle',</span>
+<span class="helpExample">        \ 'mode': 'pfrz',</span>
+<span class="helpExample">      \ },</span>
+<span class="helpExample">      \ {</span>
+<span class="helpExample">        \ 'pattern': '\(^@.\+\|\\\@&lt;!:.\+\)\@&lt;! ',</span>
+<span class="helpExample">        \ 'expanded': '.\{-}',</span>
+<span class="helpExample">        \ 'mode': 'pfr',</span>
+<span class="helpExample">      \ },</span>
+<span class="helpExample">      \ {</span>
+<span class="helpExample">        \ 'pattern': '\\\@&lt;!:.\+\zs\\\@&lt;! ',</span>
+<span class="helpExample">        \ 'expanded': '\ ',</span>
+<span class="helpExample">        \ 'mode': 'pfz',</span>
+<span class="helpExample">      \ },</span>
+<span class="helpExample">      \ ]</span>
+<span class="helpExample">    \ }</span>
+
+字符串 <span class="helpOption">'pattern'</span> 是使用正则表达式来匹配输入的匹配模式。扩展后就像扩展后的字符串
+在提示符面板中被输入了一样。
+
+对于 <span class="helpOption">'gmode'</span> （可选的）:
+  i - 内部扩展（默认）。
+  t - 插入扩展结果到提示符面板，就像你自己输入的一样。
+  k - 当非关键字的字符被输入时，插入扩展结果到提示符面板。只在&quot;t&quot;也出现时生效。
+
+对于 <span class="helpOption">'mode'</span> （对于每个条目，可选的）:
+  f - 只应用于文件名模式。
+  p - 只应用于全路径模式。
+  r - 只应用于正则表达式模式。
+  z - 只应用于模糊模式。
+  n - 只应用于使用 <span class="Special">&lt;c-y&gt;</span> 创建新文件时（使用扩展后的字符串作为文件名）。
+  c - 当使用 <span class="Special">&lt;tab&gt;</span> 自动补全目录名时（在自动补全之前立即扩展模式）。
+  <span class="Special">&lt;empty&gt;</span> 或者未定义 - 总是启用。
+
+注意: 缩写条目按顺序求值，后求值的条目会覆盖先求值的条目；当 <span class="helpOption">'gmode'</span> 为&quot;t&quot;时，
+包括他自己。
+
+<span class="Statement">                                                           </span><span class="helpHyperTextEntry"><a name="ctrlp_key_loop" >'g:ctrlp_key_loop'</a></span>
+一个实验性的特性。设置该选项为1将为多字节字符开启输入事件循环:
+<span class="helpExample">  let g:ctrlp_key_loop = 0</span>
+
+注意 #1: 当设置时，该选项会重置 <span class="helpHyperTextJump">g:ctrlp_lazy_update</span> 选项。
+
+注意 #2: 你可以在提示符面板使用自定义的按键绑定切换这个特性:
+<span class="helpExample">  let g:ctrlp_prompt_mappings = { 'ToggleKeyLoop()': ['&lt;F3&gt;'] }</span>
+
+
+<span class="Statement">                                                         </span><span class="helpHyperTextEntry"><a name="ctrlp_use_migemo" >'g:ctrlp_use_migemo'</a></span>
+设置该选项为1将为日文文件名使用Migemo模式。Migemo搜索只在正则模式下有效。 使
+用空格分割单词来分离模式:
+<span class="helpExample">  let g:ctrlp_use_migemo = 0</span>
+
+
+<span class="Statement">                                                    </span><span class="helpHyperTextEntry"><a name="ctrlp_prompt_mappings" >'g:ctrlp_prompt_mappings'</a></span>
+使用该选项来自定义CtrlP的提示窗口内的按键绑定为你喜欢的方式。你只需要保留你改
+变值（在[]内部）的行:
+<span class="helpExample">  let g:ctrlp_prompt_mappings = {</span>
+<span class="helpExample">    \ 'PrtBS()':              ['&lt;bs&gt;', '&lt;c-]&gt;'],</span>
+<span class="helpExample">    \ 'PrtDelete()':          ['&lt;del&gt;'],</span>
+<span class="helpExample">    \ 'PrtDeleteWord()':      ['&lt;c-w&gt;'],</span>
+<span class="helpExample">    \ 'PrtClear()':           ['&lt;c-u&gt;'],</span>
+<span class="helpExample">    \ 'PrtSelectMove(&quot;j&quot;)':   ['&lt;c-j&gt;', '&lt;down&gt;'],</span>
+<span class="helpExample">    \ 'PrtSelectMove(&quot;k&quot;)':   ['&lt;c-k&gt;', '&lt;up&gt;'],</span>
+<span class="helpExample">    \ 'PrtSelectMove(&quot;t&quot;)':   ['&lt;Home&gt;', '&lt;kHome&gt;'],</span>
+<span class="helpExample">    \ 'PrtSelectMove(&quot;b&quot;)':   ['&lt;End&gt;', '&lt;kEnd&gt;'],</span>
+<span class="helpExample">    \ 'PrtSelectMove(&quot;u&quot;)':   ['&lt;PageUp&gt;', '&lt;kPageUp&gt;'],</span>
+<span class="helpExample">    \ 'PrtSelectMove(&quot;d&quot;)':   ['&lt;PageDown&gt;', '&lt;kPageDown&gt;'],</span>
+<span class="helpExample">    \ 'PrtHistory(-1)':       ['&lt;c-n&gt;'],</span>
+<span class="helpExample">    \ 'PrtHistory(1)':        ['&lt;c-p&gt;'],</span>
+<span class="helpExample">    \ 'AcceptSelection(&quot;e&quot;)': ['&lt;cr&gt;', '&lt;2-LeftMouse&gt;'],</span>
+<span class="helpExample">    \ 'AcceptSelection(&quot;h&quot;)': ['&lt;c-x&gt;', '&lt;c-cr&gt;', '&lt;c-s&gt;'],</span>
+<span class="helpExample">    \ 'AcceptSelection(&quot;t&quot;)': ['&lt;c-t&gt;'],</span>
+<span class="helpExample">    \ 'AcceptSelection(&quot;v&quot;)': ['&lt;c-v&gt;', '&lt;RightMouse&gt;'],</span>
+<span class="helpExample">    \ 'ToggleFocus()':        ['&lt;s-tab&gt;'],</span>
+<span class="helpExample">    \ 'ToggleRegex()':        ['&lt;c-r&gt;'],</span>
+<span class="helpExample">    \ 'ToggleByFname()':      ['&lt;c-d&gt;'],</span>
+<span class="helpExample">    \ 'ToggleType(1)':        ['&lt;c-f&gt;', '&lt;c-up&gt;'],</span>
+<span class="helpExample">    \ 'ToggleType(-1)':       ['&lt;c-b&gt;', '&lt;c-down&gt;'],</span>
+<span class="helpExample">    \ 'PrtExpandDir()':       ['&lt;tab&gt;'],</span>
+<span class="helpExample">    \ 'PrtInsert(&quot;c&quot;)':       ['&lt;MiddleMouse&gt;', '&lt;insert&gt;'],</span>
+<span class="helpExample">    \ 'PrtInsert()':          ['&lt;c-\&gt;'],</span>
+<span class="helpExample">    \ 'PrtCurStart()':        ['&lt;c-a&gt;'],</span>
+<span class="helpExample">    \ 'PrtCurEnd()':          ['&lt;c-e&gt;'],</span>
+<span class="helpExample">    \ 'PrtCurLeft()':         ['&lt;c-h&gt;', '&lt;left&gt;', '&lt;c-^&gt;'],</span>
+<span class="helpExample">    \ 'PrtCurRight()':        ['&lt;c-l&gt;', '&lt;right&gt;'],</span>
+<span class="helpExample">    \ 'PrtClearCache()':      ['&lt;F5&gt;'],</span>
+<span class="helpExample">    \ 'PrtDeleteEnt()':       ['&lt;F7&gt;'],</span>
+<span class="helpExample">    \ 'CreateNewFile()':      ['&lt;c-y&gt;'],</span>
+<span class="helpExample">    \ 'MarkToOpen()':         ['&lt;c-z&gt;'],</span>
+<span class="helpExample">    \ 'OpenMulti()':          ['&lt;c-o&gt;'],</span>
+<span class="helpExample">    \ 'PrtExit()':            ['&lt;esc&gt;', '&lt;c-c&gt;', '&lt;c-g&gt;'],</span>
+<span class="helpExample">    \ }</span>
+
+注意: 如果按 <span class="Special">&lt;bs&gt;</span> 后光标向左移动一个字符而不是删除一个字符，在你的.vimrc中添加
+下面的设置来禁用插件默认的 <span class="Special">&lt;c-h&gt;</span> 绑定:
+<span class="helpExample">  let g:ctrlp_prompt_mappings = { 'PrtCurLeft()': ['&lt;left&gt;', '&lt;c-^&gt;'] }</span>
+
+
+<span class="PreProc">----------------------------------------</span>
+<span class="PreProc">MRU mode options:</span>
+
+<span class="Statement">                                                           </span><span class="helpHyperTextEntry"><a name="ctrlp_mruf_max" >'g:ctrlp_mruf_max'</a></span>
+指定你希望CtrlP记录的最近打开的文件历史的数目:
+<span class="helpExample">  let g:ctrlp_mruf_max = 250</span>
+
+
+<span class="Statement">                                                       </span><span class="helpHyperTextEntry"><a name="ctrlp_mruf_exclude" >'g:ctrlp_mruf_exclude'</a></span>
+你不希望CtrlP记录的文件。使用正则表达式来指定模式:
+<span class="helpExample">  let g:ctrlp_mruf_exclude = ''</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_mruf_exclude = '/tmp/.*\|/temp/.*' &quot; MacOSX/Linux</span>
+<span class="helpExample">  let g:ctrlp_mruf_exclude = '^C:\\dev\\tmp\\.*' &quot; Windows</span>
+
+
+<span class="Statement">                                                       </span><span class="helpHyperTextEntry"><a name="ctrlp_mruf_include" >'g:ctrlp_mruf_include'</a></span>
+如果你想让CtrlP只记录某些文件，在这里指定:
+<span class="helpExample">  let g:ctrlp_mruf_include = ''</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_mruf_include = '\.py$\|\.rb$'</span>
+
+
+<span class="Statement">                                                      </span><span class="helpHyperTextEntry"><a name="ctrlp_mruf_relative" >'g:ctrlp_mruf_relative'</a></span>
+设置该选项为1将只显示在当前工作目录内的最近最多使用文件:
+<span class="helpExample">  let g:ctrlp_mruf_relative = 0</span>
+
+注意: 你可以在提示符面板使用自定义的按键绑定切换这个特性:
+<span class="helpExample">  let g:ctrlp_prompt_mappings = { 'ToggleMRURelative()': ['&lt;F2&gt;'] }</span>
+
+
+<span class="Statement">                                                 </span><span class="helpHyperTextEntry"><a name="ctrlp_mruf_default_order" >'g:ctrlp_mruf_default_order'</a></span>
+设置该选项为1将在最近最多使用模式搜索时禁用排序:
+<span class="helpExample">  let g:ctrlp_mruf_default_order = 0</span>
+
+
+<span class="Statement">                                                </span><span class="helpHyperTextEntry"><a name="ctrlp_mruf_case_sensitive" >'g:ctrlp_mruf_case_sensitive'</a></span>
+将该选项和你的文件系统大小写敏感性保持一致来避免重复的最近最多使用条目:
+<span class="helpExample">  let g:ctrlp_mruf_case_sensitive = 1</span>
+
+
+<span class="Statement">                                                </span><span class="helpHyperTextEntry"><a name="ctrlp_mruf_save_on_update" >'g:ctrlp_mruf_save_on_update'</a></span>
+设置该选项为0将不会每当有一个新条目增加就把最近最多使用列表保存到磁盘文件，而
+是在退出Vim时才保存:
+<span class="helpExample">  let g:ctrlp_mruf_save_on_update = 1</span>
+
+
+<span class="PreProc">----------------------------------------</span>
+<span class="PreProc">高级选项:</span>
+
+<span class="Statement">                                                          </span><span class="helpHyperTextEntry"><a name="ctrlp_open_func" >'g:ctrlp_open_func'</a></span>
+使用一个自定义函数来打开选定的文件:
+<span class="helpExample">  let g:ctrlp_open_func = {}</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_open_func = {</span>
+<span class="helpExample">    \ 'files'     : 'Function_Name_1',</span>
+<span class="helpExample">    \ 'buffers'   : 'Function_Name_2',</span>
+<span class="helpExample">    \ 'mru files' : 'Function_Name_3',</span>
+<span class="helpExample">    \ }</span>
+
+函数结构:
+<span class="helpExample">  function! Function_Name(action, line)</span>
+<span class="helpExample">    &quot; 参数:</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:action : 打开的动作:</span>
+<span class="helpExample">    &quot; |             + 'e' : 用户按下 &lt;cr&gt;  (默认)</span>
+<span class="helpExample">    &quot; |             + 'h' : 用户按下 &lt;c-x&gt; (默认)</span>
+<span class="helpExample">    &quot; |             + 'v' : 用户按下 &lt;c-v&gt; (默认)</span>
+<span class="helpExample">    &quot; |             + 't' : 用户按下 &lt;c-t&gt; (默认)</span>
+<span class="helpExample">    &quot; |             + 'x' : 用户使用 &lt;c-o&gt; 终端对话框 (默认) 选择&quot;e[x]ternal&quot;。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:line   : 选择的文件。</span>
+
+<span class="helpExample">  endfunction</span>
+
+注意: 当使用<span class="Special">&lt;c-z&gt;</span> 和 <span class="Special">&lt;c-o&gt;</span>打开多个文件时无效。
+
+例子: 当 <span class="Special">&lt;c-t&gt;</span> 被按下时在默认浏览器中打开HTML文件，否则在Vim中打开
+<span class="helpExample">  function! HTMLOpenFunc(action, line)</span>
+<span class="helpExample">    if a:action =~ '^[tx]$' &amp;&amp; fnamemodify(a:line, ':e') =~? '^html\?$'</span>
+
+<span class="helpExample">      &quot; 获取文件名</span>
+<span class="helpExample">      let filename = fnameescape(fnamemodify(a:line, ':p'))</span>
+
+<span class="helpExample">      &quot; 关闭CtrlP</span>
+<span class="helpExample">      call ctrlp#exit()</span>
+
+<span class="helpExample">      &quot; 打开文件</span>
+<span class="helpExample">      silent! execute '!xdg-open' filename</span>
+
+<span class="helpExample">    elseif a:action == 'x' &amp;&amp; fnamemodify(a:line, ':e') !~? '^html\?$'</span>
+
+<span class="helpExample">      &quot; 不是HTML文件，再次模拟 &lt;c-o&gt; 按键并且等待新的输入</span>
+<span class="helpExample">      call feedkeys(&quot;\&lt;c-o&gt;&quot;)</span>
+
+<span class="helpExample">    else</span>
+
+<span class="helpExample">      &quot; 使用CtrlP的默认的打开文件的函数</span>
+<span class="helpExample">      call call('ctrlp#acceptfile', [a:action, a:line])</span>
+
+<span class="helpExample">    endif</span>
+<span class="helpExample">  endfunction</span>
+
+<span class="helpExample">  let g:ctrlp_open_func = { 'files': 'HTMLOpenFunc' }</span>
+
+
+<span class="Statement">                                                        </span><span class="helpHyperTextEntry"><a name="ctrlp_status_func" >'g:ctrlp_status_func'</a></span>
+为CtrlP窗口使用自定义的状态栏:
+<span class="helpExample">  let g:ctrlp_status_func = {}</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_status_func = {</span>
+<span class="helpExample">    \ 'main': 'Function_Name_1',</span>
+<span class="helpExample">    \ 'prog': 'Function_Name_2',</span>
+<span class="helpExample">    \ }</span>
+
+函数结构:
+<span class="helpExample">  &quot; 主状态栏</span>
+<span class="helpExample">  function! Function_Name_1(focus, byfname, regex, prev, item, next, marked)</span>
+<span class="helpExample">    &quot; 参数:</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:focus   : 提示符面板的焦点: &quot;prt&quot; 或者 &quot;win&quot;。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:byfname : 在文件名模式还是全路径模式: &quot;file&quot; 或者 &quot;path&quot;。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:regex   : 是否在正则表达式模式: 1 or 0。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:prev    : 前一个搜索模式。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:item    : 当前的搜索模式。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:next    : 下一个搜索模式。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:marked  : 被标记文件的数目，或者一个逗号分隔的被标记的文件名列表。</span>
+
+<span class="helpExample">    return full_statusline</span>
+<span class="helpExample">  endfunction</span>
+
+<span class="helpExample">  &quot; 状态栏进度条</span>
+<span class="helpExample">  function! Function_Name_2(str)</span>
+<span class="helpExample">    &quot; a:str : 一个当前已扫描的文件数，或者一个当前扫描目录和用户命令的字符串。</span>
+
+<span class="helpExample">    return full_statusline</span>
+<span class="helpExample">  endfunction</span>
+
+一个可用的例子，参见 <span class="Constant"><a href="https://gist.github.com/1610859">https://gist.github.com/1610859</a></span> 。
+
+<span class="Statement">                                                        </span><span class="helpHyperTextEntry"><a name="ctrlp_buffer_func" >'g:ctrlp_buffer_func'</a></span>
+指定一个会在启动或者退出CtrlP缓冲区时被调用的函数:
+<span class="helpExample">  let g:ctrlp_buffer_func = {}</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_buffer_func = {</span>
+<span class="helpExample">    \ 'enter': 'Function_Name_1',</span>
+<span class="helpExample">    \ 'exit':  'Function_Name_2',</span>
+<span class="helpExample">    \ }</span>
+
+
+<span class="Statement">                                                         </span><span class="helpHyperTextEntry"><a name="ctrlp_match_func" >'g:ctrlp_match_func'</a></span>
+为CtrlP设置一个额外的模糊匹配函数:
+<span class="helpExample">  let g:ctrlp_match_func = {}</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_match_func = { 'match': 'Function_Name' }</span>
+
+函数结构:
+<span class="helpExample">  function! Function_Name(items, str, limit, mmode, ispath, crfile, regex)</span>
+<span class="helpExample">    &quot; 参数:</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:items  : 搜索条目的全列表。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:str    : 用户输入的字符串。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:limit  : 匹配窗口的最大高度。可以用来限制返回的条目数量。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:mmode  : 在匹配模式。可以是下列字符串之一:</span>
+<span class="helpExample">    &quot; |             + &quot;full-line&quot;: 匹配整行。</span>
+<span class="helpExample">    &quot; |             + &quot;filename-only&quot;: 只匹配文件名。</span>
+<span class="helpExample">    &quot; |             + &quot;first-non-tab&quot;: 匹配到第一个制表符。</span>
+<span class="helpExample">    &quot; |             + &quot;until-last-tab&quot;: 匹配到最后一个制表符。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:ispath : 搜索文件，缓冲区，最近最多使用，混合，目录和rtscript模.</span>
+<span class="helpExample">    &quot; |             式时为1。其它为0。</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:crfile : 当前窗口中的文件。当a:ispath为1时应该被搜索结果排除在外</span>
+<span class="helpExample">    &quot; |</span>
+<span class="helpExample">    &quot; +- a:regex  : 是否在正则表达式模式: 1 or 0.</span>
+
+<span class="helpExample">    return list_of_matched_items</span>
+<span class="helpExample">  endfunction</span>
+
+
+注意: 你可以通过 { 'arg_type': <span class="helpOption">'dict'</span> } 扩展上面的任何选项，这样就可以通过
+一个字典类型的参数来传递所有的函数参数。使用参数名作为字典的键值。
+
+例子:
+<span class="helpExample">  let g:ctrlp_status_func = {</span>
+<span class="helpExample">    \ 'arg_type' : 'dict',</span>
+<span class="helpExample">    \ 'enter': 'Function_Name_1',</span>
+<span class="helpExample">    \ 'exit':  'Function_Name_2',</span>
+<span class="helpExample">    \ }</span>
+
+<span class="helpExample">  function! Function_Name_1(dict)</span>
+<span class="helpExample">    &quot; where dict == {</span>
+<span class="helpExample">    &quot; \ 'focus':   value,</span>
+<span class="helpExample">    &quot; \ 'byfname': value,</span>
+<span class="helpExample">    &quot; \ 'regex':   value,</span>
+<span class="helpExample">    &quot; \ ...</span>
+<span class="helpExample">    &quot; }</span>
+<span class="helpExample">  endfunction</span>
+
+
+<span class="PreProc">===============================================================================</span>
+命令                                                           <span class="helpHyperTextEntry">ctrlp-commands</span>
+
+<span class="Statement">                                                                       </span><span class="helpHyperTextEntry">:CtrlP</span>
+:CtrlP [起始目录]
+   用文件搜索模式打开CtrlP。
+
+   如果没有给定参数，<span class="helpHyperTextJump">g:ctrlp_working_path_mode</span> 会被用来决定起始目录。
+
+   在输入时你可以使用 <span class="Special">&lt;tab&gt;</span> 自动补全[起始目录]。
+
+<span class="Statement">                                                                 </span><span class="helpHyperTextEntry">:CtrlPBuffer</span>
+:CtrlPBuffer
+   用缓冲区搜索模式打开CtrlP。
+
+<span class="Statement">                                                                    </span><span class="helpHyperTextEntry">:CtrlPMRU</span>
+:CtrlPMRU
+   用最近最多使用模式打开CtrlP。
+
+<span class="Statement">                                                               </span><span class="helpHyperTextEntry">:CtrlPLastMode</span>
+:CtrlPLastMode <span class="Special">[--dir]</span>
+   用上一次使用的模式打开CtrlP。当提供了&quot;--dir&quot;参数，也重用上一次的工作目录。
+
+<span class="Statement">                                                                   </span><span class="helpHyperTextEntry">:CtrlPRoot</span>
+:CtrlPRoot
+    行为类似使用了 <span class="helpHyperTextJump">g:ctrlp_working_path_mode</span> = 'r' 并且忽略了该变量的当前值的
+    <span class="helpHyperTextJump">:CtrlP</span> 命令。
+
+<span class="Statement">                                                             </span><span class="helpHyperTextEntry">:CtrlPClearCache</span>
+:CtrlPClearCache
+   清除当前工作目录的缓存。和在CtrlP内按 <span class="Special">&lt;F5&gt;</span> 效果一样。
+   使用 <span class="helpHyperTextJump">g:ctrlp_use_caching</span> 来启用或禁用缓存。
+
+<span class="Statement">                                                         </span><span class="helpHyperTextEntry">:CtrlPClearAllCaches</span>
+:CtrlPClearAllCaches
+   删除在 <span class="helpHyperTextJump">g:ctrlp_cache_dir</span> 中定义的缓存目录中的所有缓存文件。
+
+<span class="PreProc">-------------------------------------------------------------------------------</span>
+由扩展提供的命令参见 <span class="helpHyperTextJump">ctrlp-extensions</span> 。
+
+<span class="PreProc">===============================================================================</span>
+按键绑定                                                        <span class="helpHyperTextEntry">ctrlp-mappings</span>
+
+<span class="Statement">                                                                </span><span class="helpHyperTextEntry">'ctrlp-&lt;c-p&gt;'</span>
+<span class="Special">&lt;c-p&gt;</span>
+   普通模式 <span class="helpHyperTextJump">Normal</span> 下默认以文件搜索模式打开CtrlP提示符面板。
+
+<span class="PreProc">----------------------------------------</span>
+<span class="PreProc">已经在提示符面板中:</span>
+
+  <span class="Special">&lt;c-d&gt;</span>
+    在全路径搜索和文件名搜索间切换。
+    注意: 在文件名搜索模式，提示符面板的提示符是'&gt;d&gt;'，而不是'&gt;&gt;&gt;'
+
+  <span class="Special">&lt;c-r&gt;</span>                                                    <span class="helpHyperTextEntry">'ctrlp-fullregexp'</span>
+    在字符串搜索模式和正则表达式模式之间切换。
+    注意: 在全正则表达式模式，提示符面板的提示符是'r&gt;&gt;'，而不是'&gt;&gt;&gt;'
+
+    详细参见: <span class="helpHyperTextJump">input-formats</span> （指引）和 <span class="helpHyperTextJump">g:ctrlp_regexp_search</span> 选项。
+
+  <span class="Special">&lt;c-f&gt;</span>, <span class="helpOption">'forward'</span> 前进
+  <span class="Special">&lt;c-up&gt;</span>
+    切换到序列里面的 <span class="helpOption">'next'</span> 后一个搜索模式。
+
+  <span class="Special">&lt;c-b&gt;</span>, <span class="helpOption">'backward'</span> 后退
+  <span class="Special">&lt;c-down&gt;</span>
+    切换到序列里面的 <span class="helpOption">'previous'</span> 前一个搜索模式。
+
+  <span class="Special">&lt;tab&gt;</span>                                                <span class="helpHyperTextEntry">'ctrlp-autocompletion'</span>
+    自动补全在提示符面板的当前工作路径中的目录名。
+
+  <span class="Special">&lt;s-tab&gt;</span>
+    在匹配窗口和提示符面板之间切换焦点。
+
+  <span class="Special">&lt;esc&gt;</span>,
+  <span class="Special">&lt;c-c&gt;</span>
+    退出CtrlP。
+
+<span class="PreProc">移动:</span>
+
+  <span class="Special">&lt;c-j&gt;</span>,
+  <span class="Special">&lt;down&gt;</span>
+    向下移动。
+
+  <span class="Special">&lt;c-k&gt;</span>,
+  <span class="Special">&lt;up&gt;</span>
+    向上移动。
+
+  <span class="Special">&lt;c-a&gt;</span>
+    移动光标到提示符面板的 <span class="helpOption">'start'</span> 开头。
+
+  <span class="Special">&lt;c-e&gt;</span>
+    移动光标到提示符面板的 <span class="helpOption">'end'</span> 末尾。
+
+  <span class="Special">&lt;c-h&gt;</span>,
+  <span class="Special">&lt;left&gt;</span>,
+  &lt;c-^&gt;
+    向左 <span class="helpOption">'left'</span> 移动一个字符。
+
+  <span class="Special">&lt;c-l&gt;</span>,
+  <span class="Special">&lt;right&gt;</span>
+    向右 <span class="helpOption">'right'</span> 移动一个字符。
+
+<span class="PreProc">编辑:</span>
+
+  &lt;c-]&gt;,
+  <span class="Special">&lt;bs&gt;</span>
+    删除前一个字符。
+
+  <span class="Special">&lt;del&gt;</span>
+    删除当前字符。
+
+  <span class="Special">&lt;c-w&gt;</span>
+    删除前一个单词。
+
+  <span class="Special">&lt;c-u&gt;</span>
+    清除输入。
+
+<span class="PreProc">浏览输入历史:</span>
+
+  <span class="Special">&lt;c-n&gt;</span>
+    提示符面板历史里的下一个字符串。
+
+  <span class="Special">&lt;c-p&gt;</span>
+    提示符面板历史里的上一个字符串。
+
+<span class="PreProc">打开/创建文件:</span>
+
+  <span class="Special">&lt;cr&gt;</span>
+    如果可能的话在 <span class="helpOption">'current'</span> 当前窗口打开选择的文件。
+
+  <span class="Special">&lt;c-t&gt;</span>
+    在 <span class="helpOption">'tab'</span> 新标签打开选择的文件。
+    Open the selected file in a new <span class="helpOption">'tab'</span>.
+
+  <span class="Special">&lt;c-v&gt;</span>
+    在 <span class="helpOption">'vertical'</span> 竖直分割窗口打开选择的文件。
+
+  <span class="Special">&lt;c-x&gt;</span>,
+  <span class="Special">&lt;c-cr&gt;</span>,
+  <span class="Special">&lt;c-s&gt;</span>
+    在 <span class="helpOption">'horizontal'</span> 水平分割窗口打开选择的文件。
+
+  <span class="Special">&lt;c-y&gt;</span>
+    创建一个新文件和它的父目录。
+
+<span class="PreProc">打开多个文件:</span>
+
+  <span class="Special">&lt;c-z&gt;</span>
+    - 标记/取消标记一个被 <span class="Special">&lt;c-o&gt;</span> 打开的文件。
+    - 标记/取消标记一个被 <span class="Special">&lt;c-y&gt;</span> 在它的目录被创建的文件。
+
+  <span class="Special">&lt;c-o&gt;</span>
+    - 打开被 <span class="Special">&lt;c-z&gt;</span> 标记的文件。
+    - 当没有文件被 <span class="Special">&lt;c-z&gt;</span> 标记时，使用下列选项打开一个终端对话框:
+
+      打开被选择的文件:
+        t - 在新标签页中打开。
+        v - 在一个竖直分割窗口中。
+        h - 在一个水平分割窗口中。
+        r - 在当前窗口中打开。
+        i - 在隐藏的缓冲区中。
+        x - （可选的）使用 <span class="helpHyperTextJump">g:ctrlp_open_func</span> 中定义的函数。
+
+      其它选项 （未显示）:
+        a - 标记匹配窗口中的所有文件。
+        d - 改变CtrlP的工作目录到被选择的文件的目录并切换到文件搜索模式。
+
+<span class="PreProc">功能按键绑定:</span>
+
+  <span class="Special">&lt;F5&gt;</span>
+    - 刷新匹配窗口并且清除当前目录的缓存。
+    - 从最近最多使用中移除被删除的文件。
+
+  <span class="Special">&lt;F7&gt;</span>
+    - 清除最近最多使用列表。
+    - 删除被 <span class="Special">&lt;c-z&gt;</span> 标记的最近最多使用条目。
+
+<span class="PreProc">粘贴:</span>
+
+  <span class="Special">&lt;Insert&gt;</span>,                                                   <span class="helpHyperTextEntry">'ctrlp-pasting'</span>
+  <span class="Special">&lt;MiddleMouse&gt;</span>
+    将剪贴板中的文本粘贴到提示符窗口中。
+
+  &lt;c-\&gt;
+    打开一个终端对话框来粘贴 <span class="Special">&lt;cword&gt;</span>， <span class="Special">&lt;cfile&gt;</span>，搜索寄存器的文本，上一次可视
+    化模式的选择，剪贴板或者任何寄存器到提示符面板中。
+
+使用 <span class="helpHyperTextJump">g:ctrlp_prompt_mappings</span> 选择你自己的绑定。
+
+<span class="PreProc">----------------------------------------</span>
+<span class="PreProc">当焦点在匹配窗口中时（使用 &lt;s-tab&gt; 来切换）:</span>
+
+  a-z
+  0-9
+  ~^-=;`',.+!@#$%&amp;_(){}[]
+    在匹配第一个字符的行中循环。
+
+<span class="PreProc">===============================================================================</span>
+输入格式                                                  <span class="helpHyperTextEntry">ctrlp-input-formats</span>
+
+<span class="PreProc">提示符面板的输入格式:</span>
+
+a)  字符串。
+
+    例如: <span class="helpOption">'abc'</span> 被内部理解为 'a[^a]\<span class="Special">{-}</span>b[^b]\<span class="Special">{-}</span>c'
+
+b)  在正则表达式模式，输入字符串被按照Vim的正则表达式模式 <span class="helpHyperTextJump">pattern</span> 来对待，不
+    进行任何修改。
+
+    例如: 'abc\d*efg' 会被解读为 'abc\d*efg'。
+
+    如何启用正则表达式模式参见 <span class="helpHyperTextJump">ctrlp-fullregexp</span> （按键绑定）和
+    <span class="helpHyperTextJump">g:ctrlp_regexp_search</span> （选项）。
+
+c)  字符串末尾使用一个冒号':'跟随一个Vim命令来在打开那个文件后执行该命令。如果
+    你需要使用':'的字面意思，使用反斜杠转义'\:'。但打开多个文件时，命令会在每
+    个打开文件上执行。
+
+    例如: 使用':45'跳转到第45行。
+
+          使用':/any\:string'跳转到'any:string'第一次出现的地方。
+
+          使用':+setf\ myfiletype|50'来设置文件类型为 <span class="helpOption">'myfiletype'</span>，然后跳转
+          到第50行。
+
+          使用':diffthis'当打开多个文件时在前四个文件上调用 <span class="helpHyperTextJump">:diffthis</span> 。
+
+    参见: Vim的 <span class="helpHyperTextJump">++opt</span> 和 <span class="helpHyperTextJump">+cmd</span>.
+
+d)  提交两个点号 '..' 来进入上级目录。如果想进入向上多级目录，每多一级使用一个
+    额外的点号:
+
+<span class="helpExample">         输入         解释为</span>
+<span class="helpExample">         ..           ../</span>
+<span class="helpExample">         ...          ../../</span>
+<span class="helpExample">         ....         ../../../</span>
+
+    注意: 如果父目录很大并且没有被缓存，可能会很慢。
+
+    你可以使用'@cd path/'来改变CtrlP的工作目录为path/。使用'@cd %:h'来改变为当
+    前文件的目录。
+
+e)  相似的，提交'/'或者'\'来查找或者跳转到项目的根目录。
+
+    如果项目很大，使用版本控制系统的列出命令来寻找文件可能会加速初始化扫描。（
+    更多细节参见 <span class="helpHyperTextJump">g:ctrlp_user_command</span> )。
+
+    注意: d) 和 e) 只在文件，目录和混合模式生效。
+
+f)  输入一个不存在的文件名并且按下 <span class="Special">&lt;c-y&gt;</span> 来创建文件。如果使用 <span class="Special">&lt;c-z&gt;</span> 标记了一个
+    文件，将会在被标记的文件的目录下创建这个新文件。
+
+    例如: 使用 'newdir/newfile.txt' 会创建一个名为<span class="helpOption">'newdir'</span>的目录和一个名为
+          'newfile.txt'的文件。
+
+          如果一个条目'some/old/dirs/oldfile.txt'被 <span class="Special">&lt;c-z&gt;</span> 标记，然后 <span class="helpOption">'newdir'</span>
+          和'newfile.txt'会在'some/old/dirs'下被创建。最终的路径会像下面这样
+          'some/old/dirs/newdir/newfile.txt'.
+
+    注意: 在Windows下使用 '\' 代替 '/' （如果 <span class="helpHyperTextJump">'shellslash'</span> 选项没有设置）。
+
+g)  在文件名模式（使用 <span class="Special">&lt;c-d&gt;</span> 切换）下，你可以使用被逗号分隔的一个主要的模式和
+    一个改善的模式。两个模式在正则表达式模式下像（a）或（b）那样工作。
+
+h)  使用?打开帮助文件。
+
+<span class="PreProc">===============================================================================</span>
+扩展                                                         <span class="helpHyperTextEntry">ctrlp-extensions</span>
+
+扩展是可选的。把它的名字添加到变量g:ctrlp_extensions中来开启扩展:
+<span class="helpExample">  let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',</span>
+<span class="helpExample">                          \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']</span>
+
+扩展的名字在变量中出现的顺序会是在使用命令 <span class="Special">&lt;c-f&gt;</span>， <span class="Special">&lt;c-b&gt;</span> 切换时扩展在状态栏中出
+现的顺序。
+
+<span class="PreProc">可用的扩展:</span>
+
+<span class="Statement">                                                                    </span><span class="helpHyperTextEntry">:CtrlPTag</span>
+<span class="Statement">  </span><span class="PreProc">* 标记模式:</span>
+    - 名称: <span class="helpOption">'tag'</span>
+    - 命令: &quot;:CtrlPTag&quot;
+    - 在一个生成的标记文件中搜索标签，跳转到标签定义。使用Vim的 <span class="helpHyperTextJump">'tags'</span> 来指定
+      标签文件的位置和名称。
+      例如: set tags+=doc/tags
+
+<span class="Statement">                                                                 </span><span class="helpHyperTextEntry">:CtrlPBufTag</span>
+<span class="Statement">                                                              </span><span class="helpHyperTextEntry">:CtrlPBufTagAll</span>
+<span class="Statement">  </span><span class="PreProc">* 缓冲区标签模式:</span>
+    - 名称: <span class="helpOption">'buffertag'</span>
+    - 命令: &quot;:CtrlPBufTag [缓冲区]&quot;，
+                &quot;:CtrlPBufTagAll&quot;。
+    - 在当前缓冲区或者所有列出的缓冲区中搜索标签并且跳转到定义。需要
+      <span class="helpHyperTextJump">exuberant_ctags</span> 或者兼容的程序。
+
+<span class="Statement">                                                               </span><span class="helpHyperTextEntry">:CtrlPQuickfix</span>
+<span class="Statement">  </span><span class="PreProc">* 快速修复模式:</span>
+    - 名称: <span class="helpOption">'quickfix'</span>
+    - 命令: &quot;:CtrlPQuickfix&quot;
+    - 在当前的快速修复错误列表中搜索条目并且跳转过去。
+
+<span class="Statement">                                                                    </span><span class="helpHyperTextEntry">:CtrlPDir</span>
+<span class="Statement">  </span><span class="PreProc">* 目录模式:</span>
+    - 名称: <span class="helpOption">'dir'</span>
+    - 命令: &quot;:CtrlPDir [起始muu]&quot;
+    - 搜索目录并且将其作为工作目录。
+    - 按键绑定:
+      + <span class="Special">&lt;cr&gt;</span> 为CtrlP修改工作目录并且保持打开状态。
+      + <span class="Special">&lt;c-t&gt;</span> 修改全局的工作目录（退出）。
+      + <span class="Special">&lt;c-v&gt;</span> 为当前窗口修改工作目录（退出）。
+      + <span class="Special">&lt;c-x&gt;</span> 修改全局工作目录为CtrlP的当前工作目录（退出）。
+
+<span class="Statement">                                                                    </span><span class="helpHyperTextEntry">:CtrlPRTS</span>
+<span class="Statement">  </span><span class="PreProc">* 运行时脚本模式:</span>
+    - 名称: <span class="helpOption">'rtscript'</span>
+    - 命令: &quot;:CtrlPRTS&quot;
+    - 在运行时路径中寻找文件（vimscripts, docs, snippets...）。
+
+<span class="Statement">                                                                   </span><span class="helpHyperTextEntry">:CtrlPUndo</span>
+<span class="Statement">  </span><span class="PreProc">* 撤销模式:</span>
+    - 名称: <span class="helpOption">'undo'</span>
+    - 命令: &quot;:CtrlPUndo&quot;
+    - 浏览撤销历史。
+
+<span class="Statement">                                                                   </span><span class="helpHyperTextEntry">:CtrlPLine</span>
+<span class="Statement">  </span><span class="PreProc">* 行模式:</span>
+    - 名称: <span class="helpOption">'line'</span>
+    - 命令: &quot;:CtrlPLine [缓冲区]&quot;
+    - 在所有列出的缓冲区或者在指定的 <span class="Special">[buffer]</span> 缓冲区内搜索一行内容。
+
+<span class="Statement">                                                                 </span><span class="helpHyperTextEntry">:CtrlPChange</span>
+<span class="Statement">                                                              </span><span class="helpHyperTextEntry">:CtrlPChangeAll</span>
+<span class="Statement">  </span><span class="PreProc">* 修改列表模式:</span>
+    - 名称: <span class="helpOption">'changes'</span>
+    - 命令: &quot;:CtrlPChange [缓冲区]&quot;,
+                &quot;:CtrlPChangeAll&quot;.
+    - 在当前缓冲区或者在所有列出的缓冲区内搜索最近的修改并跳转。
+
+<span class="Statement">                                                                  </span><span class="helpHyperTextEntry">:CtrlPMixed</span>
+<span class="Statement">  </span><span class="PreProc">* 混合模式:</span>
+    - 名称: <span class="helpOption">'mixed'</span>
+    - 命令: &quot;:CtrlPMixed&quot;
+    - 同时在文件，缓冲区和最近最多修改中搜索。
+
+<span class="Statement">                                                            </span><span class="helpHyperTextEntry">:CtrlPBookmarkDir</span>
+<span class="Statement">                                                         </span><span class="helpHyperTextEntry">:CtrlPBookmarkDirAdd</span>
+<span class="Statement">  </span><span class="PreProc">* 书签目录模式:</span>
+    - 名称: <span class="helpOption">'bookmarkdir'</span>
+    - 命令: &quot;:CtrlPBookmarkDir&quot;,
+                &quot;:CtrlPBookmarkDirAdd [目录]&quot;.
+    - 搜索一个被书签标记的目录并将其作为工作目录。
+    - 按键绑定:
+      + <span class="Special">&lt;cr&gt;</span> 为CtrlP修改工作目录并且保持打开状态，并且切换到文件搜索模式。
+      + <span class="Special">&lt;c-x&gt;</span> 修改全局的工作目录（退出）。
+      + <span class="Special">&lt;c-v&gt;</span> 为当前窗口修改工作目录（退出）。
+      + <span class="Special">&lt;F7&gt;</span>
+        - 清除书签列表。
+        - 删除被 <span class="Special">&lt;c-z&gt;</span> 标记的书签条目。
+
+<span class="PreProc">----------------------------------------</span>
+<span class="PreProc">缓冲区标记模式选项:</span>
+
+<span class="Statement">                                                   </span><span class="helpHyperTextEntry"><a name="g:ctrlp_buftag_ctags_bin" >'g:ctrlp_buftag_ctags_bin'</a></span>
+如果ctags没有在环境变量中配置，使用该选项来指定它的位置:
+<span class="helpExample">  let g:ctrlp_buftag_ctags_bin = ''</span>
+
+
+<span class="Statement">                                                   </span><span class="helpHyperTextEntry"><a name="g:ctrlp_buftag_systemenc" >'g:ctrlp_buftag_systemenc'</a></span>
+将该选项与你的操作系统的编码（非Vim的）保持一致。默认值使用Vim的全局
+<span class="helpHyperTextJump">'encoding'</span> 选项:
+<span class="helpExample">  let g:ctrlp_buftag_systemenc = &amp;encoding</span>
+
+
+<span class="Statement">                                                       </span><span class="helpHyperTextEntry"><a name="g:ctrlp_buftag_types" >'g:ctrlp_buftag_types'</a></span>
+使用该选项来在ctags, jsctags...中为指定的文件格式设置参数:
+<span class="helpExample">  let g:ctrlp_buftag_types = ''</span>
+
+例子:
+<span class="helpExample">  let g:ctrlp_buftag_types = {</span>
+<span class="helpExample">    \ 'erlang'     : '--language-force=erlang --erlang-types=drmf',</span>
+<span class="helpExample">    \ 'javascript' : {</span>
+<span class="helpExample">      \ 'bin': 'jsctags',</span>
+<span class="helpExample">      \ 'args': '-f -',</span>
+<span class="helpExample">      \ },</span>
+<span class="helpExample">    \ }</span>
+
+
+<span class="PreProc">===============================================================================</span>
+自定义                                                    <span class="helpHyperTextEntry">ctrlp-customization</span>
+
+<span class="PreProc">高亮:</span>
+<span class="Statement">  </span>* CtrlP缓冲区的设置:
+    CtrlPNoEntries : 当没有匹配被发现时的消息（错误）。
+    CtrlPMatch     : 匹配模式（标识）。
+    CtrlPLinePre   : 匹配窗口的行前缀'&gt;'。
+    CtrlPPrtBase   : 提示符窗口的基础（注释）。
+    CtrlPPrtText   : 提示符窗口的文本 （<span class="helpHyperTextJump">hl-Normal</span>）。
+    CtrlPPrtCursor : 提示符窗口的光标在文本上移动时（常量）。
+
+<span class="Statement">  </span>* 在扩展中:
+    CtrlPTabExtra  : 每一行中不匹配的部分（注释）。
+    CtrlPBufName   : 条目所属的缓冲区名称（<span class="helpHyperTextJump">hl-Directory</span>）。
+    CtrlPTagKind   : 缓冲区标签模式中标签的类型（<span class="helpHyperTextJump">hl-Title</span>）。
+    CtrlPqfLineCol : 快速修复模式中行和列的序号（注释）。
+    CtrlPUndoT     : 撤销模式的流逝时间（<span class="helpHyperTextJump">hl-Directory</span>）。
+    CtrlPUndoBr    : 撤销模式的方括号（注释）。
+    CtrlPUndoNr    : 撤销模式的方括号中的数字（字符串）。
+    CtrlPUndoSv    : 文件被保存的点（注释）。
+    CtrlPUndoPo    : 撤销树中的当前位置（<span class="helpHyperTextJump">hl-Title</span>）。
+    CtrlPBookmark  : 书签的名称（标识）。
+
+<span class="PreProc">状态栏:</span>
+<span class="Statement">  </span>* 高亮组:
+    CtrlPMode1 : <span class="helpOption">'file'</span> 或 <span class="helpOption">'path'</span> 或 <span class="helpOption">'line'</span>，和当前模式（字符）。
+    CtrlPMode2 : <span class="helpOption">'prt'</span> 或 <span class="helpOption">'win'</span>， <span class="helpOption">'regex'</span>，工作目录 <span class="helpHyperTextJump">hl-LineNr</span> 。
+    CtrlPStats : 扫描状态（函数）。
+
+  重新构建状态栏，参见 <span class="helpHyperTextJump">g:ctrlp_status_func</span> 。
+
+<span class="PreProc">===============================================================================</span>
+其它选项                                          <span class="helpHyperTextEntry">ctrlp-miscellaneous-configs</span>
+
+* 为 <span class="helpHyperTextJump">g:ctrlp_user_command</span> 使用 <span class="helpHyperTextJump">wildignore</span> :
+
+<span class="helpExample">  function! s:wig2cmd()</span>
+<span class="helpExample">    &quot; 修改wildignore为空格或者|分隔的组</span>
+<span class="helpExample">    &quot; 例如: .aux .out .toc .jpg .bmp .gif</span>
+<span class="helpExample">    &quot; 或者  .aux$\|.out$\|.toc$\|.jpg$\|.bmp$\|.gif$</span>
+<span class="helpExample">    let pats = ['[*\/]*\([?_.0-9A-Za-z]\+\)\([*\/]*\)\(\\\@&lt;!,\|$\)','\\\@&lt;!,']</span>
+<span class="helpExample">    let subs = has('win32') || has('win64') ? ['\1\3', ' '] : ['\1\2\3', '\\|']</span>
+<span class="helpExample">    let expr = substitute(&amp;wig, pats[0], subs[0], 'g')</span>
+<span class="helpExample">    let expr = substitute(expr, pats[1], subs[1], 'g')</span>
+<span class="helpExample">    let expr = substitute(expr, '\\,', ',', 'g')</span>
+
+<span class="helpExample">    &quot; 设置用户命令选项</span>
+<span class="helpExample">    let g:ctrlp_user_command = has('win32') || has('win64')</span>
+<span class="helpExample">      \ ? 'dir %s /-n /b /s /a-d | findstr /V /l &quot;'.expr.'&quot;'</span>
+<span class="helpExample">      \ : 'find %s -type f | grep -v &quot;'.expr .'&quot;'</span>
+<span class="helpExample">  endfunction</span>
+
+<span class="helpExample">  call s:wig2cmd()</span>
+
+（由 Rich Alesi &lt;github.com/ralesi&gt; 提交）
+
+* 一个独立的函数，设置项目的根目录为工作目录，如果没有找到根目录的话使用当前文
+* 件的父目录。
+
+<span class="helpExample">  function! s:setcwd()</span>
+<span class="helpExample">    let cph = expand('%:p:h', 1)</span>
+<span class="helpExample">    if cph =~ '^.\+://' | retu | en</span>
+<span class="helpExample">    for mkr in ['.git/', '.hg/', '.svn/', '.bzr/', '_darcs/', '.vimprojects']</span>
+<span class="helpExample">      let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])</span>
+<span class="helpExample">      if wd != '' | let &amp;acd = 0 | brea | en</span>
+<span class="helpExample">    endfo</span>
+<span class="helpExample">    exe 'lc!' fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '.', ''))</span>
+<span class="helpExample">  endfunction</span>
+
+<span class="helpExample">  autocmd BufEnter * call s:setcwd()</span>
+
+(需要 Vim 7.1.299+)
+
+* 使用 <span class="helpHyperTextJump">count</span> 来使用同样的按键绑定调用不同的命令:
+
+<span class="helpExample">  let g:ctrlp_cmd = 'exe &quot;CtrlP&quot;.get([&quot;&quot;, &quot;Buffer&quot;, &quot;MRU&quot;], v:count)'</span>
+
+
+<span class="PreProc">===============================================================================</span>
+开发人员                                                        <span class="helpHyperTextEntry">ctrlp-credits</span>
+
+由 Kien Nguyen &lt;github.com/kien&gt;开发。 在Vim的 <span class="helpHyperTextJump">license</span> 下发行。
+
+项目主页:      <span class="Constant"><a href="http://kien.github.com/ctrlp.vim">http://kien.github.com/ctrlp.vim</a></span>
+Git仓库:       <span class="Constant"><a href="https://github.com/kien/ctrlp.vim">https://github.com/kien/ctrlp.vim</a></span>
+Mercurial仓库: <span class="Constant"><a href="https://bitbucket.org/kien/ctrlp.vim">https://bitbucket.org/kien/ctrlp.vim</a></span>
+
+<span class="PreProc">-------------------------------------------------------------------------------</span>
+感谢所有通过github，bitbucket或电子邮件提供想法，报告bug或者帮助debugging的人。
+
+<span class="PreProc">特别感谢:</span>
+
+<span class="Statement">    </span>* Woojong Koh &lt;github.com/wjkoh&gt;
+<span class="Statement">    </span>* Simon Ruderich
+<span class="Statement">    </span>* Yasuhiro Matsumoto &lt;github.com/mattn&gt;
+<span class="Statement">    </span>* Ken Earley &lt;github.com/kenearley&gt;
+<span class="Statement">    </span>* Kyo Nagashima &lt;github.com/hail2u&gt;
+<span class="Statement">    </span>* Zak Johnson &lt;github.com/zakj&gt;
+<span class="Statement">    </span>* Diego Viola &lt;github.com/diegoviola&gt;
+<span class="Statement">    </span>* Piet Delport &lt;github.com/pjdelport&gt;
+<span class="Statement">    </span>* Thibault Duplessis &lt;github.com/ornicar&gt;
+<span class="Statement">    </span>* Kent Sibilev &lt;github.com/datanoise&gt;
+<span class="Statement">    </span>* Tacahiroy &lt;github.com/tacahiroy&gt;
+<span class="Statement">    </span>* Luca Pette &lt;github.com/lucapette&gt;
+<span class="Statement">    </span>* Seth Fowler &lt;github.com/sfowler&gt;
+<span class="Statement">    </span>* Lowe Thiderman &lt;github.com/thiderman&gt;
+<span class="Statement">    </span>* Christopher Fredén &lt;github.com/icetan&gt;
+<span class="Statement">    </span>* Zahary Karadjov &lt;github.com/zah&gt;
+<span class="Statement">    </span>* Jo De Boeck &lt;github.com/grimpy&gt;
+<span class="Statement">    </span>* Rudi Grinberg &lt;github.com/rgrinberg&gt;
+<span class="Statement">    </span>* Timothy Mellor &lt;github.com/mellort&gt;
+
+<span class="PreProc">===============================================================================</span>
+更新日志                                                      <span class="helpHyperTextEntry">ctrlp-changelog</span>
+
+    + 结合 <span class="helpHyperTextEntry">g:ctrlp_match_window_bottom</span> <span class="helpHyperTextEntry">g:ctrlp_match_window_reversed</span> 和
+<span class="Statement">      </span><span class="helpHyperTextEntry">g:ctrlp_max_height</span> 到 <span class="helpHyperTextJump">g:ctrlp_match_window</span> 。
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_match_window</span> 。
+
+<span class="PreProc">在2012/11/30之前</span>
+
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_abbrev</span>，
+              <span class="helpHyperTextJump">g:ctrlp_key_loop</span>，
+              <span class="helpHyperTextJump">g:ctrlp_open_func</span>，
+              <span class="helpHyperTextJump">g:ctrlp_tabpage_position</span>，
+              <span class="helpHyperTextJump">g:ctrlp_mruf_save_on_update</span>
+    + 重命名:
+<span class="Statement">        </span><span class="helpHyperTextEntry">g:ctrlp_dotfiles</span> -&gt; <span class="helpHyperTextJump">g:ctrlp_show_hidden</span> 。
+    + 修改 <span class="helpHyperTextJump">g:ctrlp_switch_buffer</span> 和 <span class="helpHyperTextJump">g:ctrlp_working_path_mode</span>的类型
+      （旧值仍然工作）。
+    + 当 <span class="helpHyperTextJump">g:ctrlp_user_command</span> 是一个字典时，为其增加一个新的键: <span class="helpOption">'ignore'</span>。
+
+<span class="PreProc">在2012/06/15之前</span>
+
+    + <span class="helpHyperTextJump">g:ctrlp_follow_symlinks</span> 的新值: 2。
+    + <span class="helpHyperTextJump">g:ctrlp_open_multiple_files</span> 的新值: 'j'。
+    + 允许使用 <span class="Special">&lt;c-t&gt;</span>, <span class="Special">&lt;c-x&gt;</span>, <span class="Special">&lt;c-v&gt;</span> 打开被 <span class="Special">&lt;c-z&gt;</span> 标记的文件。
+    + 扩展 '..' (<span class="helpHyperTextJump">ctrlp-input-formats</span> (d))
+    + 新的输入格式: '@cd' (<span class="helpHyperTextJump">ctrlp-input-formats</span> (d))
+
+<span class="PreProc">在2012/04/30之前</span>
+
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_mruf_default_order</span>
+    + 新特性: 被书签标记的目录的扩展。
+    + 新命令: <span class="helpHyperTextJump">:CtrlPBookmarkDir</span>
+              <span class="helpHyperTextJump">:CtrlPBookmarkDirAdd</span>
+
+<span class="PreProc">在2012/04/15之前</span>
+
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_buffer_func</span>，CtrlP缓冲区的回调函数。
+    + 移除  : g:ctrlp_mruf_last_entered，使其作为最近最多使用的默认行为。
+    + 新命令: <span class="helpHyperTextJump">:CtrlPLastMode</span>，以上一次使用的模式打开CtrlP。
+              <span class="helpHyperTextJump">:CtrlPMixed</span>，在文件，缓冲区和最近最多使用中搜索。
+
+<span class="PreProc">在2012/03/31之前</span>
+
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_default_input</span>， 进入CtrlP后的默认输入。
+              <span class="helpHyperTextJump">g:ctrlp_match_func</span>，允许使用自定义的模糊查找工具。
+    + 重命名:
+<span class="Statement">        </span><span class="helpHyperTextEntry">ClearCtrlPCache</span> -&gt; <span class="helpHyperTextJump">CtrlPClearCache</span>
+<span class="Statement">        </span><span class="helpHyperTextEntry">ClearAllCtrlPCaches</span> -&gt; <span class="helpHyperTextJump">CtrlPClearAllCaches</span>
+<span class="Statement">        </span><span class="helpHyperTextEntry">ResetCtrlP</span> -&gt; <span class="helpHyperTextJump">CtrlPReload</span>
+
+<span class="PreProc">在2012/03/02之前</span>
+
+    + 重命名:
+<span class="Statement">        </span><span class="helpHyperTextEntry">g:ctrlp_regexp_search</span> -&gt; <span class="helpHyperTextJump">g:ctrlp_regexp</span>，
+<span class="Statement">        </span><span class="helpHyperTextEntry">g:ctrlp_dont_split</span> -&gt; <span class="helpHyperTextJump">g:ctrlp_reuse_window</span>，
+<span class="Statement">        </span><span class="helpHyperTextEntry">g:ctrlp_jump_to_buffer</span> -&gt; <span class="helpHyperTextJump">g:ctrlp_switch_buffer</span>。
+    + 重命名和微调:
+<span class="Statement">        </span><span class="helpHyperTextEntry">g:ctrlp_open_multi</span> -&gt; <span class="helpHyperTextJump">g:ctrlp_open_multiple_files</span>。
+    + 过时 <span class="helpHyperTextEntry">g:ctrlp_highlight_match</span>
+    + 扩展 <span class="helpHyperTextJump">g:ctrlp_user_command</span> 支持多个命令。
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_mruf_last_entered</span> 修改最近最多使用为最近进入。
+
+<span class="PreProc">在2012/01/15之前</span>
+
+    + 新按键绑定: 交换 <span class="Special">&lt;tab&gt;</span> 和 <span class="Special">&lt;s-tab&gt;</span>. <span class="Special">&lt;tab&gt;</span> 现在用来补全在当前工作目录内的目
+                  录名。
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_arg_map</span> 使 <span class="Special">&lt;c-y&gt;</span>， <span class="Special">&lt;c-o&gt;</span> 可以接收一个参数。
+              <span class="helpHyperTextJump">g:ctrlp_status_func</span> 自定义状态栏。
+              <span class="helpHyperTextJump">g:ctrlp_mruf_relative</span> 在当前工作目录内显示最近最多使用。
+    + 扩展 g:ctrlp_open_multi 增加新选项值： tr， hr， vr。
+    + 扩展 <span class="helpHyperTextJump">g:ctrlp_custom_ignore</span> 指定过滤目录，文件和链接。
+
+<span class="PreProc">在2012/01/05之前</span>
+
+    + 新特性: 缓冲区标记扩展。
+    + 新命令: <span class="helpHyperTextJump">:CtrlPBufTag</span>, <span class="helpHyperTextJump">:CtrlPBufTagAll</span>。
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_cmd</span>，
+              <span class="helpHyperTextJump">g:ctrlp_custom_ignore</span>
+
+<span class="PreProc">在2011/11/30之前</span>
+
+    + 新特性: 标签，快速修复和目录扩展。
+    + 新命令: <span class="helpHyperTextJump">:CtrlPTag</span>, <span class="helpHyperTextJump">:CtrlPQuickfix</span>, <span class="helpHyperTextJump">:CtrlPDir</span>。
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_use_migemo</span>，
+              <span class="helpHyperTextJump">g:ctrlp_lazy_update</span>，
+              <span class="helpHyperTextJump">g:ctrlp_follow_symlinks</span>
+
+<span class="PreProc">在2011/11/13之前</span>
+
+    + 新的特殊输入: '/' 和 '\' 查找根目录 (<span class="helpHyperTextJump">ctrlp-input-formats</span> (e))
+    + 移除 ctrlp#SetWorkingPath()。
+    + 移除 <span class="helpHyperTextEntry">g:ctrlp_mru_files</span> ，使最近最多使用模式变为永久的。
+    + 扩展 g:ctrlp_open_multi，添加打开文件的新方式。
+    + 新选项: g:ctrlp_dont_split，
+              <span class="helpHyperTextJump">g:ctrlp_mruf_case_sensitive</span>
+
+<span class="PreProc">在2011/10/30之前</span>
+
+    + 新特性: 支持自定义扩展。
+              <span class="Special">&lt;F5&gt;</span> 也会从最近最多使用列表中移除不存在的文件。
+    + 新选项: g:ctrlp_jump_to_buffer
+
+<span class="PreProc">在2011/10/12之前</span>
+
+    + 新特性: 打开多个文件。
+              传递Vim的 <span class="helpHyperTextJump">++opt</span> 和 <span class="helpHyperTextJump">+cmd</span> 到新打开的文件
+              (<span class="helpHyperTextJump">ctrlp-input-formats</span> (c))
+              为 <span class="helpHyperTextJump">:CtrlP</span> [起始目录]自动补全每个目录
+    + 新按键绑定: <span class="Special">&lt;c-z&gt;</span> 标记/取消标记一个被 <span class="Special">&lt;c-o&gt;</span> 打开的文件。
+                  <span class="Special">&lt;c-o&gt;</span> 打开所有被标记的文件。
+    + 新选项: g:ctrlp_open_multi
+    + 移除 <span class="helpHyperTextEntry">g:ctrlp_persistent_input</span> <span class="helpHyperTextEntry">g:ctrlp_live_update</span> and &lt;c-^&gt;。
+
+<span class="PreProc">在2011/09/29之前</span>
+
+    + 新按键绑定: <span class="Special">&lt;c-n&gt;</span>, <span class="Special">&lt;c-p&gt;</span> 输入历史中的前一个/后一个字符串。
+                  <span class="Special">&lt;c-y&gt;</span> 创建一个新的文件和它的父目录。
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_open_new_file</span>，
+                   <span class="helpHyperTextJump">g:ctrlp_max_history</span>
+    + 添加一个新的在横向分割窗口打开的绑定：<span class="Special">&lt;c-x&gt;</span>
+
+<span class="PreProc">在2011/09/19之前</span>
+
+    + 新命令: ResetCtrlP
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_max_files</span>，
+              <span class="helpHyperTextJump">g:ctrlp_max_depth</span>，
+              g:ctrlp_live_update
+    + 新按键绑定: &lt;c-^&gt;
+
+<span class="PreProc">在2011/09/12之前</span>
+
+    + 添加在匹配窗口内循环匹配行的功能。
+    + 扩展 g:ctrlp_persistent_input的行为
+    + 扩展 <span class="helpHyperTextJump">:CtrlP</span> 的行为
+    + 新选项: <span class="helpHyperTextJump">g:ctrlp_dotfiles</span>，
+              <span class="helpHyperTextJump">g:ctrlp_clear_cache_on_exit</span>，
+              g:ctrlp_highlight_match，
+              <span class="helpHyperTextJump">g:ctrlp_user_command</span>
+    + 新的特殊输入: '..' (<span class="helpHyperTextJump">ctrlp-input-formats</span> (d))
+    + 新按键绑定: <span class="Special">&lt;F5&gt;</span>。
+    + 新命令: <span class="helpHyperTextJump">:CtrlPCurWD</span>，
+              <span class="helpHyperTextJump">:CtrlPCurFile</span>，
+              <span class="helpHyperTextJump">:CtrlPRoot</span>
+
+    + 新特性: 在最近最常使用的文件列表中搜索
+    + 新按键绑定: <span class="Special">&lt;c-b&gt;</span>。
+    + 扩展 <span class="Special">&lt;c-f&gt;</span> 的行为。
+    + 新选项: g:ctrlp_mru_files，
+              <span class="helpHyperTextJump">g:ctrlp_mruf_max</span>，
+              <span class="helpHyperTextJump">g:ctrlp_mruf_exclude</span>，
+              <span class="helpHyperTextJump">g:ctrlp_mruf_include</span>
+    + 新命令: <span class="helpHyperTextJump">:CtrlPMRU</span>
+
+<span class="PreProc">第一版发布于: 2011/09/06</span>
+
+<span class="PreProc">===============================================================================</span>
+vim&#0058;ft=help:et:ts=2:sw=2:sts=2:norl
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->
