@@ -1,0 +1,14 @@
+{% comment %} 主页中生成post的categories信息 {% endcomment %}
+{% for category in post_categories %} 
+  <li>
+    <a href="{{ BASE_PATH }}{{ site.site.categories_path }}#{{ category }}-ref">
+      {{ category | join: "/" }} 
+    </a>
+  </li>
+  {% unless forloop.last %}
+  <li>
+    <i class="icon-double-angle-right"></i>
+  </li>
+  {% endunless %}
+{% endfor %}
+{% assign post_categories = nil %}

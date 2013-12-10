@@ -1,0 +1,6 @@
+{% if site.site.liquid_raw.provider == "custom" %}
+  {% include custom/liquid_raw %}
+{% else %}
+  <pre><code>{{text | replace:"|.", "&#123;" | replace:".|", "&#125;" | replace:">", "&gt;" | replace:"<", "&lt;" }}</code></pre>
+{% endif %}
+{% assign text = nil %}

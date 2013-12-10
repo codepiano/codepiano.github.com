@@ -1,0 +1,14 @@
+{% if site.safe and site.site.analytics.provider and page.site.analytics != false %}
+
+{% case site.site.analytics.provider %}
+{% when "google" %}
+  {% include site/analytics-providers/google %}
+{% when "getclicky" %}
+  {% include site/analytics-providers/getclicky %}
+{% when "mixpanel" %}
+  {% include site/analytics-providers/mixpanel %}
+{% when "custom" %}
+  {% include custom/analytics %}
+{% endcase %}
+
+{% endif %}
