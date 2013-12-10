@@ -26,6 +26,8 @@
 
 ## 使用方法
 
+提供了一个clean分支，直接检出clean分支修改设置即可
+
 ### 通过fork
 
 1. fork我的博客，修改fork后的项目名称为：你的github ID.github.com
