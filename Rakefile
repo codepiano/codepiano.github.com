@@ -70,7 +70,7 @@ task :post do
     post.puts 'group: archive'
     post.puts 'icon: file-alt'
     post.puts "---"
-    post.puts "{% include codepiano/setup %}"
+    post.puts "{% include site/setup %}"
   end
 end # task :post
 
@@ -97,7 +97,7 @@ task :page do
     post.puts "title: \"#{title}\""
     post.puts 'group: static'
     post.puts "---"
-    post.puts "{% include codepiano/setup %}"
+    post.puts "{% include site/setup %}"
   end
 end # task :page
 
@@ -146,7 +146,7 @@ namespace :theme do
           page.puts "layout: default"
           page.puts "---"
         end 
-        page.puts "{% include codepiano/setup %}"
+        page.puts "{% include site/setup %}"
         page.puts "{% include themes/#{theme_name}/#{File.basename(filename)} %}" 
       end
     end
