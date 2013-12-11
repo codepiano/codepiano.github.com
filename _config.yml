@@ -7,13 +7,13 @@ pygments: true
 paginate: 4
 
 # 修改为自己的配置
-title : 隐匿于黑夜中的星
-tagline: 时间的回响，思维的残影
+title : _config.yml中的title设置
+tagline: 
 author :
-  name : site
-  email : anyexingchen999@qq.com
-  github : https://github.com/site
-  twitter : http://twitter.com/anyexingchen
+  name : _config.yml中的author.name
+  email : 
+  github : 
+  twitter : 
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
@@ -24,7 +24,7 @@ author :
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
 # 博客地址，如果没有自定义CNAME，写用户名即可
-production_url : http://blog.site.com
+production_url : 你的github用户名
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 # 我使用我的id作为了这个属性的属性名
@@ -84,7 +84,7 @@ site :
   comments :
     provider : disqus
     disqus :
-      short_name : site
+      short_name : 你的disque账户名
    
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
@@ -94,7 +94,7 @@ site :
   analytics :
     provider : google 
     google : 
-        tracking_id : 'UA-40934298-1'
+        tracking_id : ''
 
   # Settings for sharing helper. 
   # Sharing is for things like tweet, plusone, like, reddit buttons etc.
