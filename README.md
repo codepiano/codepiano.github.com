@@ -28,9 +28,14 @@
 
 ### 通过clean分支（建议）
 
-提供了一个clean分支，直接检出clean分支修改设置，然后merge回master分支即可
+提供了一个clean分支，直接检出clean分支修改，然后merge回master分支即可
+
+1. git checkout master
+1. git merge clean
 
 所有的个性化变量都被替换为字符串"site"
+
+建议使用该种方式，这样不用再清理文件，修改设置后可以直接使用，下面两种方式比较麻烦
 
 ### 通过fork
 
