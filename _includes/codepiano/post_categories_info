@@ -7,7 +7,7 @@
   </li>
   {% unless forloop.last %}
   <li>
-    <i class="icon-double-angle-right"></i>
+    <i class="fa fa-angle-double-right"></i>
   </li>
   {% endunless %}
 {% endfor %}

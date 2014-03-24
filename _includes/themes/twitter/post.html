@@ -1,13 +1,13 @@
-<div class="row-fluid post-full typo">
-  <div class="span2"></div>
-  <div class="span8 typo">
+<div class="row post-full typo">
+  <div class="col-md-2"></div>
+  <div class="col-md-8 typo">
     <h2>{{ page.title }} {% if page.tagline %}<small>{{page.tagline}}</small>{% endif %}</h2>
     <div class="post_info">
       {% unless page.categories == empty %}
-      <ul class="tag_box inline">
-        <li><i class="icon-calendar"></i></li>
+      <ul id="post_info" class="tag_box inline">
+        <li><i class="fa fa-calendar"></i></li>
         <li>{{ page.date | date: " %Y 年 %m 月 %d 日" }}</li>
-        <li><i class="icon-folder-open"></i></li>
+        <li><i class="fa fa-folder-open"></i></li>
         {% assign post_categories = page.categories %}
         {% include codepiano/post_categories_info %}
       </ul>
@@ -18,32 +18,30 @@
     </div>
 
     {% unless page.tags == empty %}
-    <ul class="tag_box inline">
-      <li><i class="icon-tags"></i></li>
+    <ul id="tag_info" class="tag_box inline">
+      <li><i class="fa fa-tags"></i></li>
       {% assign tags_list = page.tags %}
       {% include codepiano/tags_list %}
     </ul>
     {% endunless %}  
 
     <hr>
-    <div class="pagination pull-right">
-      <ul>
+      <ul class="pagination pull-right">
         {% if page.previous %}
-        <li class="prev"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; Previous</a></li>
+        <li class="prev"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; 前一篇</a></li>
         {% else %}
-        <li class="prev disabled"><a>&larr; Previous</a></li>
+        <li class="prev disabled"><a>&larr; 前一篇</a></li>
         {% endif %}
-        <li><a href="{{ BASE_PATH }}{{ site.codepiano.archive_path }}">Archive</a></li>
+        <li><a href="{{ BASE_PATH }}{{ site.codepiano.archive_path }}">索引</a></li>
         {% if page.next %}
-        <li class="next"><a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next &rarr;</a></li>
+        <li class="next"><a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">后一篇 &rarr;</a></li>
         {% else %}
-        <li class="next disabled"><a>Next &rarr;</a>
+        <li class="next disabled"><a>后一篇 &rarr;</a>
         {% endif %}
       </ul>
-    </div>
     <br />
     <div id="comment-hook"></div>
     {% include codepiano/comments %}
   </div>
-  <div class="span2"></div>
+  <div class="col-md-2"></div>
 </div>

@@ -43,9 +43,9 @@
       var matches = url.match(/posts\.html#(.*)/);
       if(matches && tableReference){
         tableReference.fnFilter(matches[1],2);
+        $('#post-data_filter input').val(matches[1])
       }
 
-      $('#post-data_filter input').val(matches[1])
 
       $("#post-data_filter input").keyup( function () {
         tableReference.fnFilter('', 2);
@@ -65,7 +65,7 @@ function toggleSupport(){
 /* datatables设置 */
 datatablesConfig = {
   "aaSorting": [[ 0, "desc" ],[ 1, "asc" ],[ 2, "asc" ]],
-  "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+  "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
   "sWrapper": "dataTables_wrapper form-inline",
   "sPaginationType": "bootstrap",
   "oLanguage":{

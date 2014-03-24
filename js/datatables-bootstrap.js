@@ -1,6 +1,6 @@
 /* Set the defaults for DataTables initialisation */
 $.extend( true, $.fn.dataTable.defaults, {
-	"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+	"sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
 	"sPaginationType": "bootstrap",
 	"oLanguage": {
 		"sLengthMenu": "_MENU_ records per page"
@@ -43,9 +43,9 @@ $.extend( $.fn.dataTableExt.oPagination, {
 			};
 
 			$(nPaging).addClass('pagination').append(
-				'<ul>'+
-					'<li class="prev disabled"><a href="#"><i class="icon-chevron-left"></i></a></li>'+
-					'<li class="next disabled"><a href="#"><i class="icon-chevron-right"></i></a></li>'+
+				'<ul class="pagination">'+
+					'<li class="prev disabled"><a href="#"><i class="fa fa-chevron-left"></i></a></li>'+
+					'<li class="next disabled"><a href="#"><i class="fa fa-chevron-right"></i></a></li>'+
 				'</ul>'
 			);
 			var els = $('a', nPaging);
