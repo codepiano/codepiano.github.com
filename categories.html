@@ -7,14 +7,14 @@ index: 3
 ---
 {% include codepiano/setup %}
 <div class="tabbable tabs-right row">
-  <ul class="nav nav-tabs" id="categories-nav">
+  <ul class="nav nav-tabs col-md-2" id="categories-nav">
     {% assign site_categories = site.categories %}
     {% include codepiano/anchor_of_categories %}
   </ul>
 
   <div class="tab-content">
     {% for category in site.categories %} 
-    <div class="tab-pane" id="{{ category[0] }}-ref">
+    <div class="tab-pane col-md-9" id="{{ category[0] }}-ref">
       <ul class="posts-list">
         {% assign posts_list = category[1] %}  
         {% include codepiano/posts_of_category %}
