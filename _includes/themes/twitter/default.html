@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cn">
   <head>
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
@@ -16,17 +16,16 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href="/css/typo.css" rel="stylesheet">
-    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
     <link href="/css/solarized.css" rel="stylesheet" type="text/css" media="all">
     <link href="/css/datatables-bootstrap.css" rel="stylesheet">
     <link href="/css/site.css" rel="stylesheet">
 
     <!-- javascript files -->
     <script type="text/javascript" src="/js/jquery-2.0.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="/js/datatables-bootstrap.js"></script>
     <script type="text/javascript" src="/js/site.js"></script>
@@ -51,22 +50,22 @@
   <body id="scroll-pane" data-spy="scroll" data-target="#time-list-nav">
     <div class="wrapper">
       <!-- 导航条 -->
-      <div class="navbar">
-        <div class="navbar-inner row-fluid">
-          <div class="span2">
+      <div class="nav navbar-nav" id="nav-wrap">
+        <div class="navbar-header">
+          <div class="col-md-2">
           </div>
-          <div class="span8">
-            <a class="brand" href="{{ HOME_PATH }}">
+          <div class="col-md-8">
+            <a class="navbar-brand" href="{{ HOME_PATH }}">
               <span class="site-author"> {{ site.author.name }} </span>
               <span class="site-title"> /* {{ site.title }} */ </span>
             </a>
-            <ul class="nav">
+            <ul id="nav-menu" class="nav navbar-nav">
               {% assign pages_list = site.pages %}
               {% assign group = 'navigation' %}
               {% include site/navigation_list %}
             </ul>
           </div>
-          <div class="span2">
+          <div class="col-md-2">
           </div>
         </div>
       </div>
@@ -76,13 +75,13 @@
 
     </div>
     <!-- 底部声明 -->
-    <div class="row-fluid bottom">
-      <div class="span2">
+    <div class="row bottom">
+      <div class="col-md-2">
       </div>
-      <div class="span8 text-center">
+      <div class="col-md-8 text-center">
         &mdash;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" class="license">原创作品许可 &mdash; 署名-非商业性使用-禁止演绎 3.0 未本地化版本 &mdash; CC BY-NC-ND 3.0 </a>&nbsp;&nbsp;&mdash;
       </div>
-      <div class="span2">
+      <div class="col-md-2">
       </div>
     </div>
 

@@ -37,11 +37,11 @@ html, body, div.wrapper {
 }
 
 /* font-awesome post信息按钮样式 */
-.icon-folder-open, .icon-tags, .icon-calendar {
+.fa-folder-open, .fa-tags, .fa-calendar {
   color:#A84365;
 }
 
-.icon-double-angle-right {
+.fa-double-angle-right {
   color: #FF6699;
 }
 
@@ -62,8 +62,22 @@ blockquote p {
   font-size: 15px;
 }
 /* 覆盖bootstrap导航条设置 */
-a.brand {
+a.navbar-brand {
   height: auto;
+  padding-left: 0px;
+}
+
+#nav-menu{
+  float: right; 
+}
+
+/* 导航栏的宽度 */
+#nav-wrap {
+    width: 100%;
+}
+
+#nav-wrap .navbar-header {
+    width: 100%;
 }
 
 .navbar ul.nav {
@@ -71,20 +85,14 @@ a.brand {
   height:auto;
 }
 
-.navbar>.navbar-inner{
-  padding-left: 0px;
-  padding-right: 0px;
-  border-left: none;
-  border-right: none;
-}
 
 /* 覆盖导航条激活菜单的背景色设置 */
-.navbar .nav>.active>a, .navbar .nav>.active>a:hover, .navbar .nav>.active>a:focus {
+#nav-menu a, #nav-menu a:hover, #nav-menu a:focus {
   background-color: transparent;
   box-shadow:none;
 }
 
-.navbar .nav>li.active>a {
+#nav-menu a {
   color:#EC6197; 
 }
 
@@ -162,11 +170,11 @@ ul#support.dispear>li:first-child>a:hover {
   color: #CC527A;
 }
 
-ul#support.dispear>li:first-child>a>i.icon-star-empty {
+ul#support.dispear>li:first-child>a>i.fa-star-o {
   color: #F3F3F3;
 }
 
-ul#support.dispear>li:first-child>a:hover>i.icon-star-empty {
+ul#support.dispear>li:first-child>a:hover>i.fa-star-o {
   color: #E8175D;
 }
 
@@ -174,7 +182,7 @@ ul#support.dispear>li:first-child>a:hover>i.icon-star-empty {
   color: #CC527A;
 }
 
-.icon-ok, .icon-star-empty {
+.fa-ok, .fa-star-o {
   color: #E8175D;
 }
 
@@ -189,6 +197,10 @@ ul#support.show li {
 ul#support.show a {
   border-color: #DDDDDD;
   color:#CC527A;
+}
+
+ul#support.show a i.fa-pagelines {
+  color:#308F5F;
 }
 
 /* 文章日期样式 */
@@ -206,16 +218,12 @@ table#post-data td, table#post-data th {
   color: #1077BC;
 }
 
-table#post-data .icon-calendar, table#post-data .icon-bookmark, table#post-data .icon-tags {
+table#post-data .fa-calendar, table#post-data .fa-bookmark, table#post-data .fa-tags {
   color: #1077BC;
 }
 
 table#post-data a:hover {
   color: #FF6699;
-}
-
-div.row {
-  margin-left: 0px;
 }
 
 /* 覆盖bootstrap默认的tooltip设置 */
@@ -267,11 +275,11 @@ ul.time-list a {
   color: #FF6699;
 }
 
-ul.time-list a>i.icon-chevron-right{
+ul.time-list a>i.fa-chevron-right{
   color: #F3F3F3;
 }
 
-ul.time-list>li.active>a>i.icon-chevron-right {
+ul.time-list>li.active>a>i.fa-chevron-right {
   color: #333333;
 }
 
@@ -289,4 +297,150 @@ table#about-me td{
 
 table#about-me a{
   color: #1077BC;
+}
+
+/* 文章目录列的样式 */
+ul#post_info.tag_box {
+  list-style: none;
+  margin: 0;
+  overflow: hidden; 
+  padding-left: 0px;
+}
+
+ul#tag_info.tag_box {
+  list-style: none;
+  margin: 0;
+  overflow: hidden; 
+  padding-left: 0px;
+}
+
+ul#post_info.tag_box li {
+  line-height: 28px; 
+  padding:5px;
+}
+
+ul#post_info.tag_box li i {
+  opacity: 0.9; 
+}
+
+ul#post_info.tag_box.inline li {
+  float: left; 
+}
+
+ul#post_info.tag_box a {
+  text-decoration: none;
+}
+
+ul#post_info.tag_box a span {
+  vertical-align: super;
+  font-size: 0.8em; 
+}
+
+div.navbar-header > div.col-md-8 {
+    padding-left: 0px;
+}
+
+.tabs-below > .nav-tabs,
+.tabs-right > .nav-tabs,
+.tabs-left > .nav-tabs {
+  border-bottom: 0;
+}
+
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+  display: none;
+}
+
+.tab-content > .active,
+.pill-content > .active {
+  display: block;
+}
+
+.tabs-below > .nav-tabs {
+  border-top: 1px solid #ddd;
+}
+
+.tabs-below > .nav-tabs > li {
+  margin-top: -1px;
+  margin-bottom: 0;
+}
+
+.tabs-below > .nav-tabs > li > a {
+  -webkit-border-radius: 0 0 4px 4px;
+     -moz-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
+}
+
+.tabs-below > .nav-tabs > li > a:hover,
+.tabs-below > .nav-tabs > li > a:focus {
+  border-top-color: #ddd;
+  border-bottom-color: transparent;
+}
+
+.tabs-below > .nav-tabs > .active > a,
+.tabs-below > .nav-tabs > .active > a:hover,
+.tabs-below > .nav-tabs > .active > a:focus {
+  border-color: transparent #ddd #ddd #ddd;
+}
+
+.tabs-left > .nav-tabs > li,
+.tabs-right > .nav-tabs > li {
+  float: none;
+}
+
+.tabs-left > .nav-tabs > li > a,
+.tabs-right > .nav-tabs > li > a {
+  min-width: 74px;
+  margin-right: 0;
+  margin-bottom: 3px;
+}
+
+.tabs-left > .nav-tabs {
+  float: left;
+  margin-right: 19px;
+  border-right: 1px solid #ddd;
+}
+
+.tabs-left > .nav-tabs > li > a {
+  margin-right: -1px;
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+}
+
+.tabs-left > .nav-tabs > li > a:hover,
+.tabs-left > .nav-tabs > li > a:focus {
+  border-color: #eeeeee #dddddd #eeeeee #eeeeee;
+}
+
+.tabs-left > .nav-tabs .active > a,
+.tabs-left > .nav-tabs .active > a:hover,
+.tabs-left > .nav-tabs .active > a:focus {
+  border-color: #ddd transparent #ddd #ddd;
+  *border-right-color: #ffffff;
+}
+
+.tabs-right > .nav-tabs {
+  float: right;
+  margin-left: 19px;
+  border-left: 1px solid #ddd;
+}
+
+.tabs-right > .nav-tabs > li > a {
+  margin-left: -1px;
+  -webkit-border-radius: 0 4px 4px 0;
+     -moz-border-radius: 0 4px 4px 0;
+          border-radius: 0 4px 4px 0;
+}
+
+.tabs-right > .nav-tabs > li > a:hover,
+.tabs-right > .nav-tabs > li > a:focus {
+  border-color: #eeeeee #eeeeee #eeeeee #dddddd;
+}
+
+.tabs-right > .nav-tabs .active > a,
+.tabs-right > .nav-tabs .active > a:hover,
+.tabs-right > .nav-tabs .active > a:focus {
+  border-color: #ddd #ddd #ddd transparent;
+  *border-left-color: #ffffff;
 }

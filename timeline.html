@@ -7,12 +7,12 @@ index: 2
 ---
 {% include site/setup %}
 
-<div class="row-fluid typo">
-  <div class="span9" >
+<div class="row typo">
+  <div class="col-md-9" >
     {% assign posts_list = site.posts %}  
     {% include site/timeline %}
   </div>
-  <div id="time-list-nav" class="span3">
+  <div id="time-list-nav" class="col-md-3">
     <ul id="time-list-ul" class="nav nav-tabs nav-stacked time-list affix">
       {% include site/time_list %}
       {% assign posts_list = nil %}

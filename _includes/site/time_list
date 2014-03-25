@@ -7,7 +7,7 @@
   {% capture next_month %}{{ post.previous.date | date: "%m" }}{% endcapture %}
 
   {% if this_year != next_year or this_month != next_month %}
-      <li><a href="#{{ this_year }}-{{ this_month }}"><i class="icon-chevron-right"></i>&nbsp;&nbsp;{{ this_year }} 年 {{ this_month }} 月</a></li>
+      <li><a href="#{{ this_year }}-{{ this_month }}"><i class="fa fa-chevron-right"></i>&nbsp;&nbsp;{{ this_year }} 年 {{ this_month }} 月</a></li>
   {% endif %}
 
 {% endfor %}
