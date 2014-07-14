@@ -32,7 +32,7 @@
         {% else %}
         <li class="prev disabled"><a>&larr; 前一篇</a></li>
         {% endif %}
-        <li><a href="{{ BASE_PATH }}{{ site.codepiano.archive_path }}">索引</a></li>
+        <li><a href="{{ BASE_PATH }}{{ site.site.archive_path }}">索引</a></li>
         {% if page.next %}
         <li class="next"><a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">后一篇 &rarr;</a></li>
         {% else %}
