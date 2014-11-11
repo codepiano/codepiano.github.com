@@ -82,9 +82,11 @@ site :
   # 修改评论服务设置，short_name修改为你的disque账户名
   # 如果想自定义评论服务提供商，请自行google
   comments :
-    provider : disqus
+    provider : duoshuo
     disqus :
-      short_name : 你的disque账户名
+        short_name : your-disqus-code
+    duoshuo :
+        short_name : your-duoshuo-code
    
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
