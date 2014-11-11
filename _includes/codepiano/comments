@@ -3,6 +3,8 @@
 {% case site.codepiano.comments.provider %}
 {% when "disqus" %}
   {% include codepiano/comments-providers/disqus %}
+{% when "duoshuo" %}
+  {% include codepiano/comments-providers/duoshuo %}
 {% when "custom" %}
   {% include custom/comments %}
 {% endcase %}

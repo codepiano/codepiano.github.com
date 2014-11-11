@@ -1,8 +1,8 @@
 {% comment %} 主页中生成post的categories信息 {% endcomment %}
-{% for category in post_categories %} 
+{% for category in post_categories %}
   <li>
     <a href="{{ BASE_PATH }}{{ site.codepiano.categories_path }}#{{ category }}-ref">
-      {{ category | join: "/" }} 
+      {{ category | join: "/" }}
     </a>
   </li>
   {% unless forloop.last %}

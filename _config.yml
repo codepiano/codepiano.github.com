@@ -82,8 +82,10 @@ codepiano :
   # 修改评论服务设置，short_name修改为你的disque账户名
   # 如果想自定义评论服务提供商，请自行google
   comments :
-    provider : disqus
+    provider : duoshuo
     disqus :
+      short_name : codepiano
+    duoshuo :
       short_name : codepiano
    
   # Settings for analytics helper
