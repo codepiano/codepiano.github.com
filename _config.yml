@@ -7,13 +7,15 @@ pygments: true
 paginate: 4
 
 # 修改为自己的配置
-title : 隐匿于黑夜中的星
-tagline: 时间的回响，思维的残影
+title : talk is cheap，show me the code！
+tagline: 爱生活，爱技术，爱科技，爱折腾
 author :
-  name : codepiano
-  email : anyexingchen999@qq.com
-  github : https://github.com/codepiano
-  twitter : http://twitter.com/anyexingchen
+   name : 维特闹
+  description: Tester, Internet Fans, Like OpenSource
+  email : dengnao@gmail.com
+  github : https://github.com/waitnoww
+  twitter : http://twitter.com/waitnow
+  simple_search: http://google.com/search
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
@@ -24,7 +26,7 @@ author :
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
 # 博客地址，如果没有自定义CNAME，写用户名即可
-production_url : http://blog.codepiano.com
+production_url : dengnao.com.cn
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 # 我使用我的id作为了这个属性的属性名
@@ -82,11 +84,9 @@ codepiano :
   # 修改评论服务设置，short_name修改为你的disque账户名
   # 如果想自定义评论服务提供商，请自行google
   comments :
-    provider : duoshuo
+    provider : disqus
     disqus :
-      short_name : codepiano
-    duoshuo :
-      short_name : codepiano
+      short_name : waitnowblog
    
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
@@ -94,9 +94,7 @@ codepiano :
   # 修改google分析工具的id       
   # 如果想自定义分析服务提供商，请自行google
   analytics :
-    provider : google 
-    google : 
-        tracking_id : 'UA-40934298-1'
+    provider : custom
 
   # Settings for sharing helper. 
   # Sharing is for things like tweet, plusone, like, reddit buttons etc.
