@@ -2,9 +2,10 @@ permalink: /:year/:month/:day/:title
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 auto: true
-pygments: true
+highlighter: pygments
 # 分页配置，每页最多显示几篇文章
 paginate: 4
+gems: [jekyll-paginate]
 
 # 修改为自己的配置
 title : 隐匿于黑夜中的星

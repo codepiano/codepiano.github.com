@@ -313,28 +313,32 @@ table#about-me a{
 ul#post_info.tag_box {
   list-style: none;
   margin: 0;
-  overflow: hidden; 
+  overflow: hidden;
   padding-left: 0px;
 }
 
 ul#tag_info.tag_box {
   list-style: none;
   margin: 0;
-  overflow: hidden; 
+  overflow: hidden;
   padding-left: 0px;
 }
 
+ul#tag_info.tag_box > li{
+  display:inline;
+}
+
 ul#post_info.tag_box li {
-  line-height: 28px; 
+  line-height: 28px;
   padding:5px;
 }
 
 ul#post_info.tag_box li i {
-  opacity: 0.9; 
+  opacity: 0.9;
 }
 
 ul#post_info.tag_box.inline li {
-  float: left; 
+  float: left;
 }
 
 ul#post_info.tag_box a {
@@ -343,7 +347,7 @@ ul#post_info.tag_box a {
 
 ul#post_info.tag_box a span {
   vertical-align: super;
-  font-size: 0.8em; 
+  font-size: 0.8em;
 }
 
 div.navbar-header > div.col-md-8 {
