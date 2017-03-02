@@ -2,7 +2,7 @@ permalink: /:year/:month/:day/:title
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 auto: true
-highlighter: pygments
+highlighter: rouge
 # 分页配置，每页最多显示几篇文章
 paginate: 4
 gems: [jekyll-paginate]
