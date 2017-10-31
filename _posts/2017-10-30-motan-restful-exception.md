@@ -40,6 +40,7 @@ motan 没有暴露 resteasy 提供的 @Provider 机制来处理异常，如果�
     ```
     <motan:protocol id="restfulProtocol" name="restful" endpointFactory="example"/>
     ```
+
 ### 通过 filter 处理 exception
 
 github issue 中 motan 开发人员给出的建议： [在service端，怎么处理 统一异常处理机制](https://github.com/weibocom/motan/issues/433)
