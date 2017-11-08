@@ -34,7 +34,7 @@ motan 没有暴露 resteasy 提供的 @Provider 机制来处理异常，如果�
         # 把 RpcExceptionMapper.class.getName() 替换为自己实现的统一异常处理类，例如上面实现的`ExampleExceptionMapper`类
         deployment.getProviderClasses().add(RpcExceptionMapper.class.getName());
     ```
-1. 在 META-INF 中新建 services 目录，在其中添加名为 `com.weibo.api.motan.protocol.restful.EndpointFactory`的文件 文件内容为自己实现的统一异常处理类的全名
+1. 在 META-INF 中新建 services 目录，在其中添加名为 `com.weibo.api.motan.protocol.restful.EndpointFactory`的文件 文件内容为自己实现的`EndpointFactory`实现类的全名
 1. 通过 maven 发布这个 jar 包，在需要统一异常处理的工程中依赖，修改其 motan.xml 文件的 `<motan:protocol>` 标签，指定`endpointFactory`的值为`@SpiMeta`中指定的 name 属性的值
 
     ```
