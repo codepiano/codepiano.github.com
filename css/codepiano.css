@@ -106,6 +106,12 @@ a.navbar-brand {
   color:#EC6197; 
 }
 
+#nav-menu li.active a {
+  color: #169FDE;
+  text-decoration: none;
+}
+
+
 /* 覆盖typo.css中ul默认的margin-left属性 */
 ul.tag_box {
   margin-left: 0;
