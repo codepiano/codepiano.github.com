@@ -3,8 +3,8 @@ layout: post
 keywords: os, filesystem, 文件系统, 硬盘, 打开文件, 过程
 description:  进程从硬盘读取文件时发生了什么
 title: "进程从硬盘读取文件的过程"
-categories: [os]
-tags: [os, filesystem]
+categories: [OS]
+tags: [OS, filesystem]
 group: archive
 icon: file-alt
 ---
