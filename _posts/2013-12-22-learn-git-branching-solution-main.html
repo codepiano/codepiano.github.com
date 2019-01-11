@@ -151,8 +151,8 @@ git commit
 {% highlight bash %}
 git rebase master bugFix
 git rebase bugFix side
-git rebase side another
-git rebase another master
+git rebase -i side another  //pick c7 only to rebase the right one
+git branch -f master another 
 {% endhighlight %}
 
 <p class="paragraph">
